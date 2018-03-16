@@ -1,17 +1,18 @@
 package bio.knowledge.ontology;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+
+import java.util.Set;
 
 import org.junit.Test;
 
-import bio.knowledge.ontology.mapping.CategoryMap;
-import bio.knowledge.ontology.mapping.InheritanceMap;
+import bio.knowledge.ontology.mapping.InheritanceLookup;
+import bio.knowledge.ontology.mapping.ModelLookup;
 
 public class Tests {
 	UmlsContainer umls = new UmlsContainer();
-	CategoryMap mapper = new CategoryMap();
-	InheritanceMap inheritanceMap = new InheritanceMap();
-	BiolinkModel model = BiolinkModel.get();
+	
+	ModelLookup modelLookup = ModelLookup.get();
 	
 	String UMLS_GROUP_PREFIX = "UMLSSG:";
 	String UMLS_TYPE_PREFIX = "UMLSST:";
@@ -19,7 +20,7 @@ public class Tests {
 	@Test
 	public void testUmlsCategories() {
 		for (String category : umls.getUmlsCategories()) {
-			BiolinkClass c = mapper.get(UMLS_GROUP_PREFIX + category);
+			BiolinkClass c = modelLookup.lookup(UMLS_GROUP_PREFIX + category);
 			if (c == null) {
 				fail(category + " was not mapped");
 			}
@@ -29,11 +30,29 @@ public class Tests {
 	@Test
 	public void testUmlsTypes() {
 		for (String type : umls.getUmlsTypes()) {
-			BiolinkClass c = mapper.get(UMLS_TYPE_PREFIX + type);
+			BiolinkClass c = modelLookup.lookup(UMLS_TYPE_PREFIX + type);
 			if (c == null) {
 				fail(type + " was not mapped");
 			}
 		}
+	}
+	
+	@Test
+	public void testInheritanceLookup() {
+		// Very basic test to show how this class is used
+		
+		InheritanceLookup inheritanceLookup = InheritanceLookup.get();
+		BiolinkClass c = modelLookup.lookup("SIO:010004");
+		
+		assertEquals(c.getName(), "chemical substance");
+		
+		BiolinkClass parent = inheritanceLookup.getParent(c);
+		
+		assertEquals(parent.getName(), "molecular entity");
+		
+		Set<BiolinkClass> children = inheritanceLookup.getChildren(parent);
+		
+		assertTrue(children.contains(c));
 	}
 
 }

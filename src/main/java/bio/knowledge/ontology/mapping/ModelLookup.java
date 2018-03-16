@@ -1,93 +1,115 @@
 package bio.knowledge.ontology.mapping;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bio.knowledge.ontology.BiolinkClass;
 import bio.knowledge.ontology.BiolinkModel;
 
+/**
+ * Singleton class that uses the BiolinkModel to get the Biolink categories
+ * that a given category curie map onto
+ * 
+ * @author Lance Hannestad
+ *
+ */
 public class ModelLookup {
-	public static final String UMLS_PREFIX = "UMLS:";
 	
-	private Map<String, String> umlsMap = new HashMap<String, String>();
+	private static Logger _logger = LoggerFactory.getLogger(ModelLookup.class);
 	
-	public static void main(String[] args) {
-		ModelLookup lookup = new ModelLookup();
-		
-		BiolinkClass c = lookup.lookupBestFit("DISO");
-		System.out.println(c.getName());
-	}
+	private static ModelLookup singleton;
 	
-	String lookup(String curie) {
-		if (curie.startsWith(UMLS_PREFIX)) {
-			return umlsLookup(curie.substring(UMLS_PREFIX.length()));
+	private Map<String, BiolinkClass> mapping = new HashMap<String, BiolinkClass>();
+	
+	/**
+	 * 
+	 * @return
+	 * An instance of the ModelLookup singleton
+	 */
+	public static ModelLookup get() {
+		if (singleton != null) {
+			return singleton;
 		} else {
-			return null;
+			singleton = new ModelLookup();
+			return singleton;
 		}
 	}
 	
-	WikiDataBiolinkMapping wikidataMapping = new WikiDataBiolinkMapping();
-	UMLSBiolinkMapping umlsMapping = new UMLSBiolinkMapping();
-	
-	public String lookup(NameSpace namespace, String category) {
+	private ModelLookup() {
+		InheritanceLookup inheritanceMap = InheritanceLookup.get();
 		
-		return null;
-	}
-	
-	
-	/**
-	 * Finds the Biolink category with the shortest name that matches
-	 * the given category. Considers both the Biolink category's name
-	 * as well as aliases.
-	 * 
-	 * This method may return null if nothing fits.
-	 */
-	public BiolinkClass lookupBestFit(String category) {
-		Optional<BiolinkModel> opt = BiolinkModel.load();
-		BiolinkModel model = opt.get();
+		BiolinkModel model = BiolinkModel.get();
 		
-		List<BiolinkClass> matches = new ArrayList<BiolinkClass>();
-		
-		for (BiolinkClass biolinkClass : model.getClasses()) {
-			String name = biolinkClass.getName().toLowerCase().trim();
-			if (contains(name, category)) {
-				matches.add(biolinkClass);
-			} else {
-				for (String alias : biolinkClass.getAliases()) {
-					if (contains(alias, category)) {
-						matches.add(biolinkClass);
+		for (BiolinkClass c : model.getClasses()) {
+			List<String> curies = c.getMappings();
+			
+			if (curies == null) {
+				continue;
+			}
+			
+			for (String curie : curies) {
+				if (mapping.containsKey(curie)) {
+					String msg1 = "%s maps to both %s and %s";
+					_logger.error(String.format(msg1, curie, mapping.get(curie).getName(), c.getName()));
+					
+					BiolinkClass originalClass = mapping.get(curie);
+					
+					String msg2 = "Mapping %s to %s";
+					
+					if (inheritanceMap.getAncestors(originalClass).contains(c)) {
+						_logger.warn(String.format(msg2, curie, originalClass.getName()));
+						mapping.put(curie, originalClass);
+					} else if (inheritanceMap.getAncestors(c).contains(originalClass)) {
+						_logger.warn(String.format(msg2, curie, c.getName()));
+						mapping.put(curie, c);
+					} else {
+						String msg3 = "%s maps to categories that share no inheritance relation: %s and %s";
+						_logger.error(String.format(msg2, curie, c.getName(), originalClass.getName()));
 					}
+					
+				} else {
+					mapping.put(curie, c);
 				}
 			}
 		}
-		
-		BiolinkClass biolinkClass = null;
-		int shortest = Integer.MAX_VALUE;
-		
-		for (BiolinkClass match : matches) {
-			if (match.getName().length() < shortest) {
-				biolinkClass = match;
-				shortest = match.getName().length();
-			}
-		}
-		
-		return biolinkClass;
-	}
-	
-	String umlsLookup(String umls) {
-		return null;
 	}
 	
 	/**
-	 * Performs a case insensitive check whether a is
-	 * contained in b or b is contained in a.
+	 * 
+	 * @param curie
+	 * A curie that identifies a category that maps onto the Biolink Model
+	 * @return
+	 * The BiolinkClass that the given category maps onto
 	 */
-	private boolean contains(String a, String b) {
-		String lowerA = a.toLowerCase();
-		String lowerB = b.toLowerCase();
-		return lowerB.contains(lowerA) || lowerA.contains(lowerB);
+	public BiolinkClass lookup(String curie) {
+		return mapping.get(curie);
+	}
+	
+	/**
+	 * 
+	 * @param curie
+	 * A curie that identifies a category that maps onto the Biolink Model
+	 * @return
+	 * The name of the BiolinkClass that the given category maps onto
+	 */
+	public String lookupName(String curie) {
+		BiolinkClass c = lookup(curie);
+		return c != null ? c.getName() : null;
+	}
+	
+	/**
+	 * 
+	 * @param curie
+	 * A curie that identifies a category that maps onto the Biolink Model
+	 * @return
+	 * True if curie is recognized, false otherwise
+	 */
+	public boolean containsCurie(String curie) {
+		return mapping.containsKey(curie);
 	}
 }
