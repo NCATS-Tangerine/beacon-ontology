@@ -37,6 +37,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
@@ -80,6 +81,7 @@ public class BiolinkModel {
 			// Option 1: construct a standard ObjectMapper
 			yamlSource = new URL(BIOLINK_MODEL);
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			model = mapper.readValue(yamlSource, BiolinkModel.class);
 			
 		} catch (IOException e) {
