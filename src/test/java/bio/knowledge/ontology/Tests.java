@@ -54,5 +54,17 @@ public class Tests {
 		
 		assertTrue(children.contains(c));
 	}
+	
+	@Test
+	public void reverseMappingLookup() {
+		String biolinkClassName = "genome";
+		Set<String> curies = modelLookup.reverseLookup(biolinkClassName);
+		
+		assertTrue(curies.contains("SO:0001026"));
+		assertTrue(curies.contains("SIO:000984"));
+		assertTrue(curies.contains("WD:Q7020"));
+		
+		assertTrue(curies.size() == 3);
+	}
 
 }

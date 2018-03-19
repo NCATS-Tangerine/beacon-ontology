@@ -1,9 +1,11 @@
 package bio.knowledge.ontology.mapping;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ public class ModelLookup {
 	private static ModelLookup singleton;
 	
 	private Map<String, BiolinkClass> mapping = new HashMap<String, BiolinkClass>();
+	private Map<String, Set<String>> reverseMapping = new HashMap<String, Set<String>>();
 	
 	/**
 	 * 
@@ -69,13 +72,27 @@ public class ModelLookup {
 						mapping.put(curie, c);
 					} else {
 						String msg3 = "%s maps to categories that share no inheritance relation: %s and %s";
-						_logger.error(String.format(msg2, curie, c.getName(), originalClass.getName()));
+						_logger.error(String.format(msg3, curie, c.getName(), originalClass.getName()));
 					}
 					
 				} else {
 					mapping.put(curie, c);
 				}
 			}
+		}
+		
+		for (String k : mapping.keySet()) {
+			BiolinkClass c = mapping.get(k);
+			
+			Set<String> curies = reverseMapping.get(c.getName());
+			
+			if (curies == null) {
+				curies = new HashSet<String>();
+			}
+			
+			curies.add(k);
+			
+			reverseMapping.put(c.getName(), curies);
 		}
 	}
 	
@@ -100,6 +117,13 @@ public class ModelLookup {
 	public String lookupName(String curie) {
 		BiolinkClass c = lookup(curie);
 		return c != null ? c.getName() : null;
+	}
+	
+	/**
+	 * Gets the set of curies that map onto the given BiolinkClass name
+	 */
+	public Set<String> reverseLookup(String biolinkClassName) {
+		return Collections.unmodifiableSet(reverseMapping.get(biolinkClassName));
 	}
 	
 	/**
