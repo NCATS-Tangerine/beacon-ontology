@@ -49,10 +49,18 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 public class BiolinkModel {
 	
 	private static Logger _logger = LoggerFactory.getLogger(BiolinkModel.class);
-
-	private static String BIOLINK_MODEL = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
+	
+	private static String biolinkModelURI = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
 	
 	private static BiolinkModel model = null ;
+	
+	public static String getURI() {
+		return biolinkModelURI;
+	}
+	
+	public static void setURI(String uri) {
+		biolinkModelURI = uri;
+	}
 
 	/**
 	 * Loads and returns the BiolinkModel, throwing an exception
@@ -79,7 +87,7 @@ public class BiolinkModel {
 		try {
 			
 			// Option 1: construct a standard ObjectMapper
-			yamlSource = new URL(BIOLINK_MODEL);
+			yamlSource = new URL(biolinkModelURI);
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			model = mapper.readValue(yamlSource, BiolinkModel.class);
