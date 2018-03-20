@@ -62,7 +62,8 @@ public class InheritanceLookup {
 	 * Gets the BiolinkClass's that inherit from the given parent
 	 */
 	public Set<BiolinkClass> getChildren(BiolinkClass parent) {
-		return Collections.unmodifiableSet(parentToChildrenMap.get(parent));
+		Set<BiolinkClass> children = parentToChildrenMap.get(parent);
+		return Collections.unmodifiableSet(children != null ? children : new HashSet<BiolinkClass>());
 	}
 	
 	/**
@@ -89,16 +90,18 @@ public class InheritanceLookup {
 	public Set<BiolinkClass> getDescendants(BiolinkClass parent) {
 		Set<BiolinkClass> children = getChildren(parent);
 		
-		if (children == null) {
+		if (children == null || children.isEmpty()) {
 			return new HashSet<BiolinkClass>();
-		} else {
-			Set<BiolinkClass> set = new HashSet<BiolinkClass>();
 			
+		} else {
+			Set<BiolinkClass> descendants = new HashSet<BiolinkClass>();
+			descendants.addAll(children);
+
 			for (BiolinkClass child : children) {
-				set.addAll(getDescendants(child));
+				descendants.addAll(getDescendants(child));
 			}
 			
-			return set;
+			return descendants;
 		}
 	}
 	

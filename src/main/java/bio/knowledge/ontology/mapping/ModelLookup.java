@@ -28,6 +28,7 @@ public class ModelLookup {
 	
 	private Map<String, BiolinkClass> mapping = new HashMap<String, BiolinkClass>();
 	private Map<String, Set<String>> reverseMapping = new HashMap<String, Set<String>>();
+	private Map<String, BiolinkClass> nameMapping = new HashMap<String, BiolinkClass>();
 	
 	/**
 	 * 
@@ -83,6 +84,7 @@ public class ModelLookup {
 		
 		for (String k : mapping.keySet()) {
 			BiolinkClass c = mapping.get(k);
+			nameMapping.put(c.getName(), c);
 			
 			Set<String> curies = reverseMapping.get(c.getName());
 			
@@ -123,7 +125,8 @@ public class ModelLookup {
 	 * Gets the set of curies that map onto the given BiolinkClass name
 	 */
 	public Set<String> reverseLookup(String biolinkClassName) {
-		return Collections.unmodifiableSet(reverseMapping.get(biolinkClassName));
+		Set<String> set = reverseMapping.get(biolinkClassName);
+		return Collections.unmodifiableSet(set != null ? set : new HashSet<String>());
 	}
 	
 	/**
@@ -135,5 +138,9 @@ public class ModelLookup {
 	 */
 	public boolean containsCurie(String curie) {
 		return mapping.containsKey(curie);
+	}
+	
+	public BiolinkClass getClassByName(String biolinkClassName) {
+		return nameMapping.get(biolinkClassName);
 	}
 }
