@@ -4,10 +4,12 @@ import static org.junit.Assert.*;
 
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import bio.knowledge.ontology.mapping.InheritanceLookup;
 import bio.knowledge.ontology.mapping.ModelLookup;
+import bio.knowledge.ontology.mapping.NameSpace;
 
 public class Tests {
 	UmlsContainer umls = new UmlsContainer();
@@ -65,6 +67,18 @@ public class Tests {
 		assertTrue(curies.contains("WD:Q7020"));
 		
 		assertTrue(curies.size() == 3);
+	}
+	
+	@Test
+	public void nameSpaceTests() {
+		
+		String biolinkTerm = "molecular entity";
+		
+		String biolinkCurie = NameSpace.BIOLINK.getCurie(biolinkTerm);
+		assertEquals(biolinkCurie,"BLM:MolecularEntity");
+		
+		String biolinkIri = NameSpace.BIOLINK.getIri(biolinkTerm);
+		assertEquals(biolinkIri,"http://bioentity.io/vocab/MolecularEntity");
 	}
 
 }
