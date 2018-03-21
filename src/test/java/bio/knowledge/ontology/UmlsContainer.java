@@ -2,11 +2,9 @@ package bio.knowledge.ontology;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -20,7 +18,9 @@ public class UmlsContainer {
 	private void load() {
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 		try (InputStream stream = classloader.getResourceAsStream("SemGroups_2013.txt")) {
-			Scanner scanner = new Scanner(stream).useDelimiter(Pattern.compile("\\||\\n"));
+			
+			Scanner scanner = new Scanner(stream);
+			scanner.useDelimiter(Pattern.compile("\\||\\n"));
 			
 			// Each row has four columns
 			while (scanner.hasNext()) {
