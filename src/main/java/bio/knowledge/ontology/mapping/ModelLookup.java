@@ -121,6 +121,11 @@ public class ModelLookup {
 		return c != null ? c.getName() : null;
 	}
 	
+	public String lookupDescription(String curie) {
+		BiolinkClass c = lookup(curie);
+		return c != null ? c.getDescription() : "";
+	}
+	
 	/**
 	 * Gets the set of curies that map onto the given BiolinkClass name
 	 */
