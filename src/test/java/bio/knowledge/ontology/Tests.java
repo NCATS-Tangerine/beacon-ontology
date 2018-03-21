@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Set;
 
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 
 import bio.knowledge.ontology.mapping.InheritanceLookup;

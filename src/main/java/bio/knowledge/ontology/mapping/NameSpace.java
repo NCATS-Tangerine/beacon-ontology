@@ -37,12 +37,14 @@ public enum NameSpace {
 	}
 	
 	public String getCurie(String objectId) {
+		if(objectId==null) return null;
 		if(this.equals(BIOLINK))
 			objectId = toCamelCaps(objectId);
 		return getPrefix()+objectId;
 	}
 
 	public String getIri(String objectId) {
+		if(objectId==null) return null;
 		if(this.equals(BIOLINK))
 			objectId = toCamelCaps(objectId);
 		return getBaseIri()+objectId;
