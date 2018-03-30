@@ -31,13 +31,15 @@ import java.util.Optional;
 
 import org.apache.commons.text.WordUtils;
 
+import bio.knowledge.ontology.BiolinkTerm;
+
 public enum NameSpace {
 	
-	BIOLINK("blm","http://bioentity.io/vocab/"),
-	WIKIDATA("wd","https://www.wikidata.org/wiki/"),
-	UMLSSG("umlssg","https://metamap.nlm.nih.gov/Docs/SemGroups_2013#"),
-	BIOPAX("bp","http://www.biopax.org/release/biopax-level3.owl#"),
-	NDEXBIO("ndex","http://http://www.ndexbio.org/")
+	BIOLINK("BLM","http://bioentity.io/vocab/"),
+	WIKIDATA("WD","https://www.wikidata.org/wiki/"),
+	UMLSSG("UMLSSG","https://metamap.nlm.nih.gov/Docs/SemGroups_2013#"),
+	BIOPAX("BP","http://www.biopax.org/release/biopax-level3.owl#"),
+	NDEXBIO("NDEX","http://http://www.ndexbio.org/")
 	;
 	
 	private final String prefix;
@@ -49,38 +51,24 @@ public enum NameSpace {
 	}
 	
 	public String getPrefix() {
-		return prefix+":";
+		return prefix;
 	}
 	
 	public String getBaseIri() {
 		return baseIri;
 	}
-
-	private String toCamelCaps(String objectId) {
-		
-		String[] words = objectId.split("\\s+");
-		
-		objectId = "";
-		
-		for(String word:words)
-			objectId +=
-				word.substring(0, 1).toUpperCase()+
-				word.substring(1).toLowerCase();
-		
-		return objectId;
-	}
 	
 	public String getCurie(String objectId) {
 		if(objectId==null) return null;
 		if(this.equals(BIOLINK))
-			objectId = toCamelCaps(objectId);
-		return getPrefix()+objectId;
+			objectId = BiolinkTerm.getObjectId(objectId);
+		return getPrefix()+":"+objectId;
 	}
 
 	public String getIri(String objectId) {
 		if(objectId==null) return null;
 		if(this.equals(BIOLINK))
-			objectId = toCamelCaps(objectId);
+			objectId = BiolinkTerm.getObjectId(objectId);
 		return getBaseIri()+objectId;
 	}
 	
@@ -94,7 +82,7 @@ public enum NameSpace {
     ) { 
     	if(curie==null || curie.isEmpty()) return Optional.empty();
     	String[] idpart = curie.split(":");	
-		String prefix = idpart[0].toLowerCase();
+		String prefix = idpart[0].toUpperCase();
     	for(NameSpace type: NameSpace.values()) {
     		if(type.prefix.equals(prefix))
     			return Optional.of(type) ;

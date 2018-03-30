@@ -72,14 +72,45 @@ public enum BiolinkTerm {
 	
 	private BiolinkTerm(String label) {
 		this.label = label;
-		this.objectId = "";
+		this.objectId = getObjectId(label);
+	}
+	
+	private static String toCamelCaps(String objectId) {
+		
+		String[] words = objectId.split("\\s+");
+		
+		objectId = "";
+		
+		for(String word:words)
+			objectId +=
+				word.substring(0, 1).toUpperCase()+
+				word.substring(1).toLowerCase();
+		
+		return objectId;
+	}
+	
+	/**
+	 * 
+	 * @param label
+	 * @return
+	 */
+	public static String getObjectId(String label) {
+		return toCamelCaps(label);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getObjectId() {
+		return objectId;
 	}
 
 	/**
 	 * @return the id
 	 */
 	public String getId() {
-		return NameSpace.BIOLINK.getPrefix()+objectId;
+		return NameSpace.BIOLINK.getPrefix()+":"+objectId;
 	}
 
 	/**

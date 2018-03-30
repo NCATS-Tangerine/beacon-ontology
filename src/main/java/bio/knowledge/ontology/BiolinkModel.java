@@ -54,6 +54,16 @@ public class BiolinkModel {
 	
 	private static BiolinkModel model = null ;
 	
+
+	private String id;
+	private String name;
+	private String description;
+	private Map<String, String> prefixes;
+	
+	private Object types;
+	private Object slots;
+	private List<BiolinkClass> classes;
+	
 	public static String getURI() {
 		return biolinkModelURI;
 	}
@@ -165,13 +175,4 @@ public class BiolinkModel {
 	public void setClasses(List<BiolinkClass> classes) {
 		this.classes = classes;
 	}
-
-	private String id;
-	private String name;
-	private String description;
-	private Map<String, String> prefixes;
-	
-	private Object types;
-	private Object slots;
-	private List<BiolinkClass> classes;
 }

@@ -329,7 +329,10 @@ public class BeaconBiolinkModel {
 	 * @return Biolink Model ontology term name deemed equivalent to input termId
 	 */
 	public static Optional<BiolinkTerm> lookUp( String namespace, String termId ) {
-
+		
+		// Sanity check...
+		namespace = namespace.toUpperCase();
+		
 		Optional<BiolinkTerm> mapping = BeaconBiolinkMappingIndex.getMapping(namespace, termId);
 		if(mapping.isPresent())
 			return Optional.of(mapping.get());
