@@ -45,6 +45,9 @@ import bio.knowledge.ontology.mapping.NameSpace;
  * TODO: The Biolink Model YAML should be directly parsed to create this class (but can I create an Enum bey reflection?)
  */
 public enum BiolinkTerm {
+	
+	// Concept Types
+	
 		NAMED_THING("named thing"),
 		ACTIVITY_AND_BEHAVIOR("activity and behavior"),
 		ADMINISTRATIVE_ENTITY("administrative entity"),
@@ -64,7 +67,10 @@ public enum BiolinkTerm {
 		PHYSIOLOGY("physiology"),
 		INFORMATION_CONTENT_ENTITY("information content entity"),
 		PROCEDURE("procedure"),
-		PHENOMENON("phenomenon")
+		PHENOMENON("phenomenon"),
+		
+	// Association Types
+		ASSOCIATION("association")
 	;
 	
 	private final String label;
