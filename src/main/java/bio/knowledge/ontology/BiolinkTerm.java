@@ -113,9 +113,10 @@ public enum BiolinkTerm {
 	}
 
 	/**
-	 * @return the id
+	 * 
+	 * @return
 	 */
-	public String getId() {
+	public String getCurie() {
 		return NameSpace.BIOLINK.getPrefix()+":"+objectId;
 	}
 
@@ -146,9 +147,12 @@ public enum BiolinkTerm {
 		return Optional.empty();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getDefinition() {
 		// TODO: The actual definition should be loaded from the Biolink Model!
 		return label;
 	}
-
 }
