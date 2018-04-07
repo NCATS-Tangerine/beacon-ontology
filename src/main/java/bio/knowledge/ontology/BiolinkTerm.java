@@ -146,4 +146,9 @@ public enum BiolinkTerm {
 		return Optional.empty();
 	}
 
+	public String getDefinition() {
+		// TODO: The actual definition should be loaded from the Biolink Model!
+		return label;
+	}
+
 }
