@@ -35,27 +35,78 @@ import bio.knowledge.ontology.BiolinkTerm;
 
 public enum NameSpace {
 	
-	BIOLINK("BLM","http://bioentity.io/vocab/"),
-	WIKIDATA("WD","https://www.wikidata.org/wiki/"),
-	UMLSSG("UMLSSG","https://metamap.nlm.nih.gov/Docs/SemGroups_2013#"),
-	BIOPAX("BP","http://www.biopax.org/release/biopax-level3.owl#"),
-	NDEXBIO("NDEX","http://http://www.ndexbio.org/")
+	BIOLINK("BLM","http://bioentity.io/vocab/", BiolinkTerm.NAMED_THING),
+	
+	// PubMed concepts should always be tagged as scientific articles?
+	PMID("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
+	PUBMED("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
+	
+	DOID("DOID", "", BiolinkTerm.DISEASE),  // Disease Ontology
+	
+	NCBIGENE("NCBIGENE", "", BiolinkTerm.GENE),
+	HGNC_SYMBOL("HGNC.SYMBOL", "", BiolinkTerm.GENE),
+	
+	ORPHANET("ORPHANET", "", BiolinkTerm.DISEASE), //	ORPHANET: http://www.orpha.net/
+	
+	GENECARDS("GENECARDS", "", BiolinkTerm.GENE),
+	
+	UNIPROT("UNIPROT", "", BiolinkTerm.PROTEIN),  // Uniprot protein database - actually also "CHEM"...
+	
+	CHEBI("CHEBI", "", BiolinkTerm.CHEMICAL_SUBSTANCE),
+	DRUGBANK("DRUGBANK", "", BiolinkTerm.DRUG),
+	
+	BIOPAX("BP","http://www.biopax.org/release/biopax-level3.owl#", BiolinkTerm.PHYSIOLOGY),
+
+	// Kyoto Encyclopedia of Genes and Genomes
+	KEGG("KEGG", "", BiolinkTerm.PHYSIOLOGY), 
+	KEGG_PATHWAY("KEGG_PATHWAY", "", BiolinkTerm.PHYSIOLOGY),
+	
+	REACT("REACT", "", BiolinkTerm.PHYSIOLOGY),    // REACTome == pathways?
+	REACTOME("REACTOME", "", BiolinkTerm.PHYSIOLOGY), // REACTOME == pathways?
+
+	PATHWAYCOMMONS("PATHWAYCOMMONS", "", BiolinkTerm.PHYSIOLOGY),  // Pathway Commons
+	MIR("MIRTARBASE", "", BiolinkTerm.MICRORNA), // mirtarbase - micro RNA targets
+	SMPDB("SMPDB", "", BiolinkTerm.PHYSIOLOGY),   // Small Molecular Pathway Database
+	
+	UMLSSG("UMLSSG","https://metamap.nlm.nih.gov/Docs/SemGroups_2013#", BiolinkTerm.NAMED_THING),
+	
+	NDEXBIO("NDEX","http://http://www.ndexbio.org/", BiolinkTerm.NAMED_THING),
+	
+	WIKIDATA("WD", "https://www.wikidata.org/wiki/", BiolinkTerm.NAMED_THING)
 	;
 	
 	private final String prefix;
 	private final String baseIri;
+	private final BiolinkTerm defaultConceptType;
 	
-	private NameSpace(String prefix, String baseIri) {
+	private NameSpace(String prefix, String baseIri, BiolinkTerm conceptType) {
 		this.prefix  = prefix;
 		this.baseIri = baseIri;
+		this.defaultConceptType = conceptType;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getPrefix() {
 		return prefix;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getBaseIri() {
 		return baseIri;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public BiolinkTerm defaultConceptType() {
+		return defaultConceptType;
 	}
 	
 	public String getCurie(String objectId) {
@@ -81,6 +132,7 @@ public enum NameSpace {
     		String curie // curie may also be a raw prefix... should still work?
     ) { 
     	if(curie==null || curie.isEmpty()) return Optional.empty();
+    	
     	String[] idpart = curie.split(":");	
 		String prefix = idpart[0].toUpperCase();
     	for(NameSpace type: NameSpace.values()) {
@@ -108,7 +160,7 @@ public enum NameSpace {
 			
 			/*
 			 * TODO: add a NameSpace lookup mechanism here
-			 * to generate proper IRIs for beacon specific CURIEs
+			 * to generate proper URIs for beacon specific CURIEs
 			 */
 			Optional<NameSpace> nsOpt = lookUpByPrefix(curieParts[0]);
 			

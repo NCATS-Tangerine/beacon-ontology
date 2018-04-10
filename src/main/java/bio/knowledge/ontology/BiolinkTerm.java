@@ -48,29 +48,30 @@ public enum BiolinkTerm {
 	
 	// Concept Types
 	
-		NAMED_THING("named thing"),
-		ACTIVITY_AND_BEHAVIOR("activity and behavior"),
-		ADMINISTRATIVE_ENTITY("administrative entity"),
-		DEVICE("device"),
-		//OCCUPATION("occupation"), // not directly tracked in Biolink?
-		ANATOMICAL_ENTITY("anatomical entity"),
-		GENOMIC_ENTITY("genomic entity"),
-		GENE("gene"),
-		PROTEIN("protein"),
-		DISEASE("disease"),
-		CHEMICAL_SUBSTANCE("chemical substance"),
-		DRUG("drug"),
-		GEOGRAPHIC_LOCATION("geographic location"),
-		ORGANISMAL_ENTITY("organismal entity"),
-		INDIVIDUAL_ORGANISM("individual organism"),
-		BIOLOGICAL_PROCESS("biological process"),
-		PHYSIOLOGY("physiology"),
-		INFORMATION_CONTENT_ENTITY("information content entity"),
-		PROCEDURE("procedure"),
-		PHENOMENON("phenomenon"),
-		
+	NAMED_THING("named thing"),
+	ACTIVITY_AND_BEHAVIOR("activity and behavior"),
+	ADMINISTRATIVE_ENTITY("administrative entity"),
+	DEVICE("device"),
+	//OCCUPATION("occupation"), // not directly tracked in Biolink?
+	ANATOMICAL_ENTITY("anatomical entity"),
+	GENOMIC_ENTITY("genomic entity"),
+	GENE("gene"),
+	PROTEIN("protein"),
+	MICRORNA("microRNA"),
+	DISEASE("disease"),
+	CHEMICAL_SUBSTANCE("chemical substance"),
+	DRUG("drug"),
+	GEOGRAPHIC_LOCATION("geographic location"),
+	ORGANISMAL_ENTITY("organismal entity"),
+	INDIVIDUAL_ORGANISM("individual organism"),
+	BIOLOGICAL_PROCESS("biological process"),
+	PHYSIOLOGY("physiology"),
+	INFORMATION_CONTENT_ENTITY("information content entity"),
+	PROCEDURE("procedure"),
+	PHENOMENON("phenomenon"),
+	
 	// Association Types
-		ASSOCIATION("association")
+	ASSOCIATION("association")
 	;
 	
 	private final String label;
