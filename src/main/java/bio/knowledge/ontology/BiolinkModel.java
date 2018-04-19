@@ -61,7 +61,7 @@ public class BiolinkModel {
 	private Map<String, String> prefixes;
 	
 	private Object types;
-	private Object slots;
+	private List<BiolinkSlot> slots;
 	private List<BiolinkClass> classes;
 	
 	public static String getURI() {
@@ -158,12 +158,12 @@ public class BiolinkModel {
 	}
 
 
-	public Object getSlots() {
+	public List<BiolinkSlot> getSlots() {
 		return slots;
 	}
 
 
-	public void setSlots(Object slots) {
+	public void setSlots(List<BiolinkSlot> slots) {
 		this.slots = slots;
 	}
 

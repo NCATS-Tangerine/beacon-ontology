@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class BiolinkClass {
+public class BiolinkClass implements BiolinkEntityInterface {
 	private String name;
 	private String description;
 	private String is_a;
