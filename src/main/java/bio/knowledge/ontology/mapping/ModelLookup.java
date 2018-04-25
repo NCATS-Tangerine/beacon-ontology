@@ -10,46 +10,25 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import bio.knowledge.ontology.BiolinkClass;
-import bio.knowledge.ontology.BiolinkModel;
+import bio.knowledge.ontology.BiolinkEntityInterface;
 
 /**
- * Singleton class that uses the BiolinkModel to get the Biolink categories
- * that a given category curie map onto
  * 
- * @author Lance Hannestad
+ * @author lance
  *
+ * @param <T>
+ * Either a BiolinkClass or a BiolinkSlot
  */
-public class ModelLookup {
+public class ModelLookup<T extends BiolinkEntityInterface> {
 	
 	private static Logger _logger = LoggerFactory.getLogger(ModelLookup.class);
 	
-	private static ModelLookup singleton;
-	
-	private Map<String, BiolinkClass> mapping = new HashMap<String, BiolinkClass>();
+	private Map<String, T> mapping = new HashMap<String, T>();
 	private Map<String, Set<String>> reverseMapping = new HashMap<String, Set<String>>();
-	private Map<String, BiolinkClass> nameMapping = new HashMap<String, BiolinkClass>();
+	private Map<String, T> nameMapping = new HashMap<String, T>();
 	
-	/**
-	 * 
-	 * @return
-	 * An instance of the ModelLookup singleton
-	 */
-	public static ModelLookup get() {
-		if (singleton != null) {
-			return singleton;
-		} else {
-			singleton = new ModelLookup();
-			return singleton;
-		}
-	}
-	
-	private ModelLookup() {
-		InheritanceLookup inheritanceMap = InheritanceLookup.get();
-		
-		BiolinkModel model = BiolinkModel.get();
-		
-		for (BiolinkClass c : model.getClasses()) {
+	public ModelLookup(List<T> entities, InheritanceLookup<T> inheritanceMap) {		
+		for (T c : entities) {
 			List<String> curies = c.getMappings();
 			
 			if (curies == null) {
@@ -61,7 +40,7 @@ public class ModelLookup {
 					String msg1 = "%s maps to both %s and %s";
 					_logger.error(String.format(msg1, curie, mapping.get(curie).getName(), c.getName()));
 					
-					BiolinkClass originalClass = mapping.get(curie);
+					T originalClass = mapping.get(curie);
 					
 					String msg2 = "Mapping %s to %s";
 					
@@ -83,7 +62,7 @@ public class ModelLookup {
 		}
 		
 		for (String k : mapping.keySet()) {
-			BiolinkClass c = mapping.get(k);
+			T c = mapping.get(k);
 			nameMapping.put(c.getName(), c);
 			
 			Set<String> curies = reverseMapping.get(c.getName());
@@ -105,7 +84,7 @@ public class ModelLookup {
 	 * @return
 	 * The BiolinkClass that the given category maps onto
 	 */
-	public BiolinkClass lookup(String curie) {
+	public T lookup(String curie) {
 		return mapping.get(curie);
 	}
 	
@@ -117,17 +96,17 @@ public class ModelLookup {
 	 * The name of the BiolinkClass that the given category maps onto
 	 */
 	public String lookupName(String curie) {
-		BiolinkClass c = lookup(curie);
+		T c = lookup(curie);
 		return c != null ? c.getName() : null;
 	}
 	
 	public String lookupDescription(String curie) {
-		BiolinkClass c = lookup(curie);
+		T c = lookup(curie);
 		return c != null ? c.getDescription() : "";
 	}
 	
 	/**
-	 * Gets the set of curies that map onto the given BiolinkClass name
+	 * Gets the set of curies that map onto the given T name
 	 */
 	public Set<String> reverseLookup(String biolinkClassName) {
 		Set<String> set = reverseMapping.get(biolinkClassName);
@@ -145,7 +124,7 @@ public class ModelLookup {
 		return mapping.containsKey(curie);
 	}
 	
-	public BiolinkClass getClassByName(String biolinkClassName) {
+	public T getClassByName(String biolinkClassName) {
 		return nameMapping.get(biolinkClassName);
 	}
 }

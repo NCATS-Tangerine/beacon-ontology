@@ -3,47 +3,30 @@ package bio.knowledge.ontology.mapping;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import bio.knowledge.ontology.BiolinkClass;
-import bio.knowledge.ontology.BiolinkModel;
+import bio.knowledge.ontology.BiolinkEntityInterface;
 
-public class InheritanceLookup {
+public class InheritanceLookup<T extends BiolinkEntityInterface> {
 	
-	private Map<BiolinkClass, BiolinkClass> childToParentMap = new HashMap<BiolinkClass, BiolinkClass>();
-	private Map<BiolinkClass, Set<BiolinkClass>> parentToChildrenMap = new HashMap<BiolinkClass, Set<BiolinkClass>>();
+	private Map<T, T> childToParentMap = new HashMap<T, T>();
+	private Map<T, Set<T>> parentToChildrenMap = new HashMap<T, Set<T>>();
 	
-	private static InheritanceLookup singleton;
-	
-	/**
-	 * 
-	 * @return
-	 * An instance of the InheritanceLookup singleton
-	 */
-	public static InheritanceLookup get() {
-		if (singleton != null) {
-			return singleton;
-		} else {
-			singleton = new InheritanceLookup();
-			return singleton;
-		}
-	}
-	
-	private InheritanceLookup() {
-		BiolinkModel model = BiolinkModel.get();
+	public InheritanceLookup(List<T> entities) {
 		
-		Map<String, BiolinkClass> nameMap = new HashMap<String, BiolinkClass>();
+		Map<String, T> nameMap = new HashMap<String, T>();
 		
-		for (BiolinkClass c : model.getClasses()) {
+		for (T c : entities) {
 			nameMap.put(c.getName(), c);
 		}
 		
-		for (BiolinkClass child : model.getClasses()) {
+		for (T child : entities) {
 			String parentName = child.getIs_a();
 			
 			if (parentName != null) {
-				BiolinkClass parent = nameMap.get(parentName);
+				T parent = nameMap.get(parentName);
 				
 				childToParentMap.put(child, parent);
 				addChild(parent, child);
@@ -54,26 +37,26 @@ public class InheritanceLookup {
 	/**
 	 * Gets the BiolinkClass that the given child class inherits from
 	 */
-	public BiolinkClass getParent(BiolinkClass child) {
+	public T getParent(T child) {
 		return childToParentMap.get(child);
 	}
 	
 	/**
 	 * Gets the BiolinkClass's that inherit from the given parent
 	 */
-	public Set<BiolinkClass> getChildren(BiolinkClass parent) {
-		Set<BiolinkClass> children = parentToChildrenMap.get(parent);
-		return Collections.unmodifiableSet(children != null ? children : new HashSet<BiolinkClass>());
+	public Set<T> getChildren(T parent) {
+		Set<T> children = parentToChildrenMap.get(parent);
+		return Collections.unmodifiableSet(children != null ? children : new HashSet<T>());
 	}
 	
 	/**
 	 * Builds up a set of all BiolinkClass's that the given
 	 * BiolinkClass inherits from
 	 */
-	public Set<BiolinkClass> getAncestors(BiolinkClass child) {
-		Set<BiolinkClass> set = new HashSet<BiolinkClass>();
+	public Set<T> getAncestors(T child) {
+		Set<T> set = new HashSet<T>();
 		
-		BiolinkClass parent = getParent(child);
+		T parent = getParent(child);
 		
 		while (parent != null) {
 			set.add(parent);
@@ -87,17 +70,17 @@ public class InheritanceLookup {
 	 * Recursively builds up a set of all BiolinkClass's that inherit from
 	 * the given BiolinkClass
 	 */
-	public Set<BiolinkClass> getDescendants(BiolinkClass parent) {
-		Set<BiolinkClass> children = getChildren(parent);
+	public Set<T> getDescendants(T parent) {
+		Set<T> children = getChildren(parent);
 		
 		if (children == null || children.isEmpty()) {
-			return new HashSet<BiolinkClass>();
+			return new HashSet<T>();
 			
 		} else {
-			Set<BiolinkClass> descendants = new HashSet<BiolinkClass>();
+			Set<T> descendants = new HashSet<T>();
 			descendants.addAll(children);
 
-			for (BiolinkClass child : children) {
+			for (T child : children) {
 				descendants.addAll(getDescendants(child));
 			}
 			
@@ -105,19 +88,19 @@ public class InheritanceLookup {
 		}
 	}
 	
-	public boolean containsParent(BiolinkClass parent) {
+	public boolean containsParent(T parent) {
 		return parentToChildrenMap.containsKey(parent);
 	}
 	
-	public boolean containsChild(BiolinkClass child) {
+	public boolean containsChild(T child) {
 		return childToParentMap.containsKey(child);
 	}
 	
-	private boolean addChild(BiolinkClass parent, BiolinkClass child) {
-		Set<BiolinkClass> children = parentToChildrenMap.get(parent);
+	private boolean addChild(T parent, T child) {
+		Set<T> children = parentToChildrenMap.get(parent);
 		
 		if (children == null) {
-			children = new HashSet<BiolinkClass>();
+			children = new HashSet<T>();
 		}
 		
 		boolean isChildAdded = children.add(child);
