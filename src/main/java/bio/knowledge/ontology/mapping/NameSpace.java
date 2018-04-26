@@ -86,11 +86,11 @@ public enum NameSpace {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return XMLNS namespace prefix (generally all capitalized). 
+	 * Note: only the raw namespace "prefix" is given, *without* the 'colon'
 	 */
 	public String getPrefix() {
-		return prefix;
+		return prefix+":";
 	}
 	
 	/**
@@ -109,13 +109,23 @@ public enum NameSpace {
 		return defaultConceptType;
 	}
 	
+	/**
+	 * 
+	 * @param objectId
+	 * @return
+	 */
 	public String getCurie(String objectId) {
 		if(objectId==null) return null;
 		if(this.equals(BIOLINK))
 			objectId = BiolinkTerm.getObjectId(objectId);
-		return getPrefix()+":"+objectId;
+		return getPrefix()+objectId;
 	}
-
+	
+	/**
+	 * 
+	 * @param objectId
+	 * @return
+	 */
 	public String getIri(String objectId) {
 		if(objectId==null) return null;
 		if(this.equals(BIOLINK))

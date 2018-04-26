@@ -118,7 +118,7 @@ public enum BiolinkTerm {
 	 * @return
 	 */
 	public String getCurie() {
-		return NameSpace.BIOLINK.getPrefix()+":"+objectId;
+		return NameSpace.BIOLINK.getPrefix()+objectId;
 	}
 
 	/**
