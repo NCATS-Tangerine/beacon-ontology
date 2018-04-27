@@ -48,12 +48,11 @@ public class BeaconBiolinkMappingIndex extends HashMap<String, BiolinkModelMappi
 	
 	public BeaconBiolinkMappingIndex() {
 		
-		// By Beacon Id (used as a String key)
-		put("http://rkb.ncats.io",  directBiolinkMapping);
-		put("http://garbanzo.sulab.org/",  wikidataBiolinkMapping);
-		put("https://biolink-kb.ncats.io/",  umlsBiolinkMapping);
-		put("https://ndex-kb.ncats.io", umlsBiolinkMapping);
-
+		// By Beacon URI (used as a String key)
+		put("HTTP://RKB.NCATS.IO",         directBiolinkMapping);
+		put("HTTP://GARBANZO.SULAB.ORG",   wikidataBiolinkMapping);
+		put("HTTPS://BIOLINK-KB.NCATS.IO", directBiolinkMapping);
+		put("HTTPS://NDEX-KB.NCATS.IO",    umlsBiolinkMapping);
 	
 		put(NameSpace.BIOLINK.getPrefix(),  directBiolinkMapping);
 		put(NameSpace.WIKIDATA.getPrefix(), wikidataBiolinkMapping);

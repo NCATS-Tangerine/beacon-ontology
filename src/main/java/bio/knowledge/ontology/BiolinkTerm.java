@@ -69,6 +69,8 @@ public enum BiolinkTerm {
 	INFORMATION_CONTENT_ENTITY("information content entity"),
 	PROCEDURE("procedure"),
 	PHENOMENON("phenomenon"),
+	VARIANT("variant"), 
+	PHENOTYPE("phenotype"),
 	
 	// Association Types
 	ASSOCIATION("association")

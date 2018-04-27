@@ -23,6 +23,8 @@ public class DirectBiolinkMapping extends BiolinkModelMapping {
 		put("BLM:Gene",BiolinkTerm.GENE);
 		put("BLM:Protein",BiolinkTerm.PROTEIN);
 		put("BLM:Disease",BiolinkTerm.DISEASE);
+		put("BLM:Variant",BiolinkTerm.VARIANT);
+		put("BLM:Phenotype",BiolinkTerm.PHENOTYPE);
 		put("BLM:ChemicalSubstance",BiolinkTerm.CHEMICAL_SUBSTANCE);
 		put("BLM:Drug",BiolinkTerm.DRUG);
 		put("BLM:GeographicLocation",BiolinkTerm.GEOGRAPHIC_LOCATION);
