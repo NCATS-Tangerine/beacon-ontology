@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import bio.knowledge.ontology.BiolinkTerm;
+import bio.knowledge.ontology.mapping.umls.UMLSBiolinkMapping;
+import bio.knowledge.ontology.mapping.wikidata.WikiDataBiolinkMapping;
 
 /**
  * @author richard

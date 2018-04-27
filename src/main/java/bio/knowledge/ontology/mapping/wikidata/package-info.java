@@ -25,51 +25,8 @@
  * THE SOFTWARE.
  *-------------------------------------------------------------------------------
  */
-package bio.knowledge.ontology.mapping;
-
-import java.util.HashMap;
-
-import javax.annotation.PostConstruct;
-
-import bio.knowledge.ontology.BiolinkClass;
-import bio.knowledge.ontology.BiolinkModel;
-import bio.knowledge.ontology.BiolinkSlot;
-import bio.knowledge.ontology.BiolinkTerm;
-
 /**
- * @author richard
+ * @author Richard
  *
  */
-public class BiolinkModelMapping extends HashMap<String, BiolinkTerm> {
-
-	private static final long serialVersionUID=1234687328782964210L;
-	
-	private BiolinkModel biolinkModel;
-	
-	protected InheritanceLookup<BiolinkClass> classInheritanceLookup;
-	protected ModelLookup<BiolinkClass> classModelLookup;
-	
-	protected InheritanceLookup<BiolinkSlot> slotInheritanceLookup;
-	protected ModelLookup<BiolinkSlot> slotModelLookup;
-	
-	@PostConstruct
-	void init() {
-		biolinkModel = BiolinkModel.get();
-		
-		classInheritanceLookup = new InheritanceLookup<BiolinkClass>(biolinkModel.getClasses());
-		classModelLookup = new ModelLookup<BiolinkClass>(biolinkModel.getClasses(), classInheritanceLookup);
-		
-		slotInheritanceLookup = new InheritanceLookup<BiolinkSlot>(biolinkModel.getSlots());
-		slotModelLookup = new ModelLookup<BiolinkSlot>(biolinkModel.getSlots(), slotInheritanceLookup);
-	}
-	
-	/**
-	 * 
-	 * @param curie
-	 * @return
-	 */
-	public String termCurieToBiolinkDescription(String curie) {
-		return classModelLookup.lookupDescription(curie);
-	}
-
-}
+package bio.knowledge.ontology.mapping.wikidata;

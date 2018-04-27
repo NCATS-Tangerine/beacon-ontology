@@ -81,6 +81,7 @@ public class ModelLookup<T extends BiolinkEntityInterface> {
 	 * 
 	 * @param curie
 	 * A curie that identifies a category that maps onto the Biolink Model
+	 * 
 	 * @return
 	 * The BiolinkClass that the given category maps onto
 	 */

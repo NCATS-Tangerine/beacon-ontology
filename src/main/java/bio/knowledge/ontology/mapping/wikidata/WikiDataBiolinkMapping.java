@@ -1,9 +1,10 @@
 /**
  * 
  */
-package bio.knowledge.ontology.mapping;
+package bio.knowledge.ontology.mapping.wikidata;
 
 import bio.knowledge.ontology.BiolinkTerm;
+import bio.knowledge.ontology.mapping.BiolinkModelMapping;
 
 /**
  * @author richard
