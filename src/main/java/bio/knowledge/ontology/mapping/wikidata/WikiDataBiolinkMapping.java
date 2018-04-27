@@ -19,7 +19,7 @@ public class WikiDataBiolinkMapping extends BiolinkModelMapping {
 	 *  with the list of Wikidata "concept type" properties 
 	 *  with their mappings to the Biolink Model
 	 */
-	WikiDataBiolinkMapping() {
+	public WikiDataBiolinkMapping() {
 		put("wd:Q12140",BiolinkTerm.DRUG);                // "Drug"
 		put("wd:Q7187", BiolinkTerm.GENE);                // "Gene"
 		put("wd:Q11173",BiolinkTerm.CHEMICAL_SUBSTANCE);  // "Chemical compound"

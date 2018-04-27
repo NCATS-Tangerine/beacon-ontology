@@ -42,8 +42,8 @@ public class BeaconBiolinkMappingIndex extends HashMap<String, BiolinkModelMappi
 
 	private static final long serialVersionUID = -8922021938416438973L;
 	
-	private final DirectBiolinkMapping directBiolinkMapping     = new DirectBiolinkMapping();
-	private final UMLSBiolinkMapping     umlsBiolinkMapping     = new UMLSBiolinkMapping();
+	private final DirectBiolinkMapping     directBiolinkMapping = new DirectBiolinkMapping();
+	private final UMLSBiolinkMapping         umlsBiolinkMapping = new UMLSBiolinkMapping();
 	private final WikiDataBiolinkMapping wikidataBiolinkMapping = new WikiDataBiolinkMapping();
 	
 	public BeaconBiolinkMappingIndex() {
