@@ -318,10 +318,6 @@ public class BeaconBiolinkModel {
 		}
 	}
 	
-	public static Optional<BiolinkTerm> lookUp( Integer beaconId, String termId ) {
-		return lookUp( beaconId.toString(), termId );
-	}
-	
 	/**
 	 * 
 	 * @param beaconId of source beacon (used to identify semantic mapping required)
