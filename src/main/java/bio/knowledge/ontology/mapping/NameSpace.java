@@ -35,8 +35,6 @@ import bio.knowledge.ontology.BiolinkTerm;
 
 public enum NameSpace {
 	
-	BIOLINK("BLM","http://bioentity.io/vocab/", BiolinkTerm.NAMED_THING),
-	
 	// PubMed concepts should always be tagged as scientific articles?
 	PMID("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	PUBMED("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
@@ -74,7 +72,9 @@ public enum NameSpace {
 	
 	NDEXBIO("NDEX","http://http://www.ndexbio.org/", BiolinkTerm.NAMED_THING),
 	
-	WIKIDATA("WD", "https://www.wikidata.org/wiki/", BiolinkTerm.NAMED_THING)
+	WIKIDATA("WD", "https://www.wikidata.org/wiki/", BiolinkTerm.NAMED_THING),
+	
+	BIOLINK("BLM","http://bioentity.io/vocab/", BiolinkTerm.NAMED_THING)
 	;
 	
 	private final String prefix;
