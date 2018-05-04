@@ -32,13 +32,6 @@ import java.util.Optional;
 import bio.knowledge.ontology.mapping.NameSpace;
 
 /**
- * This class documents the specific hard coded 
- * Concept semantic types defined by the UMLS.
- * 
- * Note that although the UMLS_URI corresponds to 
- * a real web document, hence is somewhat informative and
- * confers globally uniqueness to the URI, the composite 
- * URI itself simulated and is NOT directly resolvable (yet).
  * 
  * @author Richard Bruskiewich
  *

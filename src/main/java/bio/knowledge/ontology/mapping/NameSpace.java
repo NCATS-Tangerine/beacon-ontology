@@ -41,6 +41,8 @@ public enum NameSpace {
 	PMID("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	PUBMED("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	
+	MONDO("MONDO", "http://purl.obolibrary.org/obo/MONDO_", BiolinkTerm.DISEASE),  // Monarch Disease Ontology
+	
 	DOID("DOID", "", BiolinkTerm.DISEASE),  // Disease Ontology
 	
 	NCBIGENE("NCBIGENE", "", BiolinkTerm.GENE),
