@@ -142,6 +142,15 @@ public enum BiolinkTerm {
 		}
 		return Optional.empty();
 	}
+	
+	public static BiolinkTerm lookUpName(BiolinkClass biolinkClass) {
+		String label = biolinkClass.getName();
+		for(BiolinkTerm term : BiolinkTerm.values()) {
+			if(term.getLabel().equals(label)) 
+				return term;
+		}
+		return null;
+	}
 
 	/**
 	 * 
