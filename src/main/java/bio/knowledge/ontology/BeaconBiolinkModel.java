@@ -34,14 +34,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-
-import bio.knowledge.ontology.mapping.BeaconBiolinkMappingIndex;
 
 /**
  * 
@@ -51,7 +49,7 @@ import bio.knowledge.ontology.mapping.BeaconBiolinkMappingIndex;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BeaconBiolinkModel {
 	
-	private static Logger _logger = LoggerFactory.getLogger(BeaconBiolinkModel.class);
+	//private static Logger _logger = LoggerFactory.getLogger(BeaconBiolinkModel.class);
 
 	private static String BIOLINK_MODEL = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
 	
