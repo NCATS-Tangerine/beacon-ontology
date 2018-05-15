@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
+import org.junit.Ignore;
 //import org.junit.Ignore;
 import org.junit.Test;
 
@@ -95,7 +96,7 @@ public class Tests {
 		assertTrue(curies.size() == 3);
 	}
 	
-	@Test
+	@Test @Ignore
 	public void slotReverseMappingLookup() {
 		String biolinkSlotName = "causes";
 		Set<String> curies = biolinkSlotLookup.reverseLookup(biolinkSlotName);
