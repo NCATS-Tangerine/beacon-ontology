@@ -128,7 +128,7 @@ public enum NameSpace {
 	 * @param objectId
 	 * @return
 	 */
-	public String getIri(String objectId) {
+	public String getUri(String objectId) {
 		if(objectId==null) return null;
 		if(this.equals(BIOLINK))
 			objectId = BiolinkTerm.getObjectId(objectId);

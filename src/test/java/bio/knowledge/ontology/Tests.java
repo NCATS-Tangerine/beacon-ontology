@@ -114,7 +114,7 @@ public class Tests {
 		String biolinkCurie = NameSpace.BIOLINK.getCurie(biolinkTerm);
 		assertEquals(biolinkCurie,"BLM:MolecularEntity");
 		
-		String biolinkIri = NameSpace.BIOLINK.getIri(biolinkTerm);
+		String biolinkIri = NameSpace.BIOLINK.getUri(biolinkTerm);
 		assertEquals(biolinkIri,"http://bioentity.io/vocab/MolecularEntity");
 	}
 
