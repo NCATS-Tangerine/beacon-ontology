@@ -35,8 +35,9 @@ import bio.knowledge.ontology.mapping.NameSpace;
  * 
  * @author Richard Bruskiewich
  *
- * TODO: The Biolink Model YAML should be directly parsed to create this class (but can I create an Enum bey reflection?)
+ * TODO: The Biolink Model YAML should be directly parsed to create this class (but can I create an Enum by reflection?)
  */
+@Deprecated
 public enum BiolinkTerm {
 	
 	// Concept Types
@@ -120,7 +121,7 @@ public enum BiolinkTerm {
 	 * @return the iri
 	 */
 	public String getIri() {
-		return NameSpace.BIOLINK.getBaseIri()+objectId;
+		return NameSpace.BIOLINK.getBaseUri()+objectId;
 	}
 
 	/**

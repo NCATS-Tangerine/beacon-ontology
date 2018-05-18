@@ -98,7 +98,7 @@ public enum NameSpace {
 	 * 
 	 * @return
 	 */
-	public String getBaseIri() {
+	public String getBaseUri() {
 		return baseIri;
 	}
 	
@@ -131,7 +131,7 @@ public enum NameSpace {
 		if(objectId==null) return null;
 		if(this.equals(BIOLINK))
 			objectId = BiolinkTerm.getObjectId(objectId);
-		return getBaseIri()+objectId;
+		return getBaseUri()+objectId;
 	}
 	
 	/**
@@ -179,7 +179,7 @@ public enum NameSpace {
 				
 				NameSpace ns = nsOpt.get();
 				
-				iri = ns.getBaseIri();
+				iri = ns.getBaseUri();
 				
 				// Local Hack to tweak Wikidata properties URI
 				if(ns.equals(WIKIDATA)) {
@@ -200,7 +200,7 @@ public enum NameSpace {
 			 * Assume that this is a simple Biolink type and default 
 			 * to a regular Biolink IRI, with camel case objectId
 			 */
-			iri = BIOLINK.getBaseIri() + WordUtils.capitalizeFully(id,null).replaceAll(" ", "");
+			iri = BIOLINK.getBaseUri() + WordUtils.capitalizeFully(id,null).replaceAll(" ", "");
 		}
 		
 		return iri;
