@@ -89,7 +89,6 @@ public enum NameSpace {
 	
 	/**
 	 * @return XMLNS namespace prefix (generally all capitalized). 
-	 * Note: only the raw namespace "prefix" is given, *without* the 'colon'
 	 */
 	public String getPrefix() {
 		return prefix+":";
