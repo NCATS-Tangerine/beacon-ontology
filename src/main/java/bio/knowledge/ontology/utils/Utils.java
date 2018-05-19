@@ -67,6 +67,18 @@ public class Utils {
 	
 	/**
 	 * 
+	 * @param phrase
+	 * @return
+	 */
+	public static String toSnakeCase(String phrase) {
+		if (phrase == null) {
+			return null;
+		}
+		return String.join("_", phrase.split(" "));
+	}
+	
+	/**
+	 * 
 	 * @param s
 	 * @param beginIndex
 	 * @param endIndex

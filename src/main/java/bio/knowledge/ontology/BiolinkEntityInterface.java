@@ -46,6 +46,8 @@ public interface BiolinkEntityInterface {
 	public String getName();
 
 	public void setName(String name);
+	
+	public String getObjectId();
 
 	public String getIs_a();
 	
@@ -56,7 +58,7 @@ public interface BiolinkEntityInterface {
 	public void setDescription(String description);
 	
 	/**
-	 * Gets the CURIE ID of the given entity.
+	 * Gets the CURIE ID of the given Biolink Model term.
 	 */
 	public default String getCurie() {
 		
@@ -65,10 +67,13 @@ public interface BiolinkEntityInterface {
 		if (name == null) {
 			return null;
 		} else {
-			return NameSpace.BIOLINK.getPrefix() + Utils.toUpperCamelCase(name);
+			return NameSpace.BIOLINK.getPrefix() + getObjectId();
 		}
 	}
 	
+	/**
+	 * Gets the URI ID of the given Biolink Model term.
+	 */
 	public default String getUri() {
 		
 		String name = getName();
@@ -76,7 +81,7 @@ public interface BiolinkEntityInterface {
 		if (name == null) {
 			return null;
 		} else {
-			return NameSpace.BIOLINK.getBaseUri() + Utils.toUpperCamelCase(name);
+			return NameSpace.BIOLINK.getBaseUri() + getObjectId();
 		}
 	}
 	

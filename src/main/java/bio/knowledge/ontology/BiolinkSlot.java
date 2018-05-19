@@ -5,8 +5,11 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import bio.knowledge.ontology.utils.Utils;
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BiolinkSlot implements BiolinkEntityInterface {
+	
 	private String name;
 	private String description;
 	private List<String> mappings;
@@ -26,6 +29,10 @@ public class BiolinkSlot implements BiolinkEntityInterface {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getObjectId() {
+		return Utils.toSnakeCase(name);
 	}
 
 	public String getDescription() {

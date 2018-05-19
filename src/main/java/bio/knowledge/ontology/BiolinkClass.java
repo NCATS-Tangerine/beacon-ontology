@@ -33,8 +33,11 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import bio.knowledge.ontology.utils.Utils;
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BiolinkClass implements BiolinkEntityInterface {
+	
 	private String name;
 	private String description;
 	private String is_a;
@@ -42,20 +45,32 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	private Object slot_usage;
 	private Boolean mixin;
 	private List<String> flags;
+	
 	@JsonProperty(value = "abstract") private Boolean _abstract;
+	
 	private List<String> mixins;
+	
 	@JsonProperty(value = "values_from") private List<String> values_from;
 	
 	@JsonProperty(value = "subclass_of") private String subclass_of;
 	private List<String> aliases = new ArrayList<String>();
+	
 	@JsonProperty(value = "union_of") private List<String> union_of;
+	
 	private List<String> mappings;
+	
 	private String notes;
+	
 	@JsonProperty(value = "id_prefixes") private List<String> id_prefixes;
+	
 	private String comment;
+	
 	@JsonProperty(value = "defining_slots") private List<String> defining_slots;
+	
 	private Boolean symmetric;
+	
 	@JsonProperty(value = "see_also") private String see_also;
+	
 	private String schema;
 	
 	public String getName() {
@@ -64,6 +79,11 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getObjectId() {
+		return Utils.toUpperCamelCase(name);
+	}
+
 	public String getDescription() {
 		return description;
 	}

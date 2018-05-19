@@ -39,16 +39,26 @@ public enum NameSpace {
 	PMID("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	PUBMED("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	
+	DC("DC", "http://purl.org/dc/elements/1.1/", BiolinkTerm.INFORMATION_CONTENT_ENTITY), // Dublin Core
+	
+	RO("RO", "http://purl.obolibrary.org/obo/RO_", BiolinkTerm.INFORMATION_CONTENT_ENTITY), // Relations Ontology
+	
+	IAO("IAO", "http://purl.obolibrary.org/obo/IAO_", BiolinkTerm.INFORMATION_CONTENT_ENTITY), // Information Artifact Ontology
+
+	BFO("BFO", "http://purl.obolibrary.org/obo/BFO_", BiolinkTerm.INFORMATION_CONTENT_ENTITY), // Information Artifact Ontology
+	
 	MONDO("MONDO", "http://purl.obolibrary.org/obo/MONDO_", BiolinkTerm.DISEASE),  // Monarch Disease Ontology
 	
-	DOID("DOID", "", BiolinkTerm.DISEASE),  // Disease Ontology
+	DOID("DOID", "http://purl.obolibrary.org/obo/DOID_", BiolinkTerm.DISEASE),  // Disease Ontology
 	
 	NCBIGENE("NCBIGENE", "", BiolinkTerm.GENE),
 	HGNC_SYMBOL("HGNC.SYMBOL", "", BiolinkTerm.GENE),
 	
-	ORPHANET("ORPHANET", "", BiolinkTerm.DISEASE), //	ORPHANET: http://www.orpha.net/
+	ORPHANET("ORDO", "http://www.orpha.net/ORDO/Orphanet_", BiolinkTerm.DISEASE), //	ORPHANET: http://www.orpha.net/
 	
 	GENECARDS("GENECARDS", "", BiolinkTerm.GENE),
+	
+	GENO("GENO", "http://purl.obolibrary.org/obo/GENO_", BiolinkTerm.GENE), // Genotype Ontology
 	
 	UNIPROT("UNIPROT", "", BiolinkTerm.PROTEIN),  // Uniprot protein database - actually also "CHEM"...
 	
