@@ -36,8 +36,8 @@ import bio.knowledge.ontology.BiolinkTerm;
 public enum NameSpace {
 	
 	// PubMed concepts should always be tagged as scientific articles?
-	PMID("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
-	PUBMED("PMID", "", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
+	PMID("PMID", "https://www.ncbi.nlm.nih.gov/pubmed/", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
+	PUBMED("PMID", "https://www.ncbi.nlm.nih.gov/pubmed/", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	
 	DC("DC", "http://purl.org/dc/elements/1.1/", BiolinkTerm.INFORMATION_CONTENT_ENTITY), // Dublin Core
 	
@@ -63,7 +63,10 @@ public enum NameSpace {
 	UNIPROT("UNIPROT", "", BiolinkTerm.PROTEIN),  // Uniprot protein database - actually also "CHEM"...
 	
 	CHEBI("CHEBI", "", BiolinkTerm.CHEMICAL_SUBSTANCE),
+	CHEMBL("CHEMBL", "https://www.ebi.ac.uk/chembl/compound/inspect/CHEMBL", BiolinkTerm.CHEMICAL_SUBSTANCE),
+	
 	DRUGBANK("DRUGBANK", "", BiolinkTerm.DRUG),
+	RXNAV("RXNAV", "https://rxnav.nlm.nih.gov/REST/Ndfrt/allInfo?nui=", BiolinkTerm.DRUG),
 	
 	BIOPAX("BP","http://www.biopax.org/release/biopax-level3.owl#", BiolinkTerm.PHYSIOLOGY),
 
@@ -83,6 +86,8 @@ public enum NameSpace {
 	NDEXBIO("NDEX","http://http://www.ndexbio.org/", BiolinkTerm.NAMED_THING),
 	
 	WIKIDATA("WD", "https://www.wikidata.org/wiki/", BiolinkTerm.NAMED_THING),
+	
+	OBO("OBO","http://purl.obolibrary.org/obo/", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	
 	BIOLINK("BLM","http://bioentity.io/vocab/", BiolinkTerm.NAMED_THING)
 	;
