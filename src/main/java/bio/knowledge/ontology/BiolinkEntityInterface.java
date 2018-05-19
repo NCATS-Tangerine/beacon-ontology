@@ -30,7 +30,6 @@ package bio.knowledge.ontology;
 import java.util.List;
 
 import bio.knowledge.ontology.mapping.NameSpace;
-import bio.knowledge.ontology.utils.Utils;
 
 /**
  * See child classes:<br>{@link bio.knowledge.ontology.BiolinkClass}<br>
