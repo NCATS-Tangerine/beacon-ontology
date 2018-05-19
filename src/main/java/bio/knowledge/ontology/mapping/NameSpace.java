@@ -121,7 +121,7 @@ public enum NameSpace {
 	 * 
 	 * @return
 	 */
-	public BiolinkTerm defaultConceptType() {
+	public BiolinkTerm defaultConceptCategory() {
 		return defaultConceptType;
 	}
 	
