@@ -50,20 +50,26 @@ public enum BiolinkTerm {
 	ANATOMICAL_ENTITY("anatomical entity"),
 	GENOMIC_ENTITY("genomic entity"),
 	GENE("gene"),
+	GENE_OR_GENE_PRODUCT("gene or gene product"),
 	PROTEIN("protein"),
-	MICRORNA("microRNA"),
+	MICRORNA("microRNA"), 
+	TRANSCRIPT("transcript"),
 	DISEASE("disease"),
+	MOLECULAR_ENTITY("molecular entity"),
 	CHEMICAL_SUBSTANCE("chemical substance"),
 	DRUG("drug"),
 	GEOGRAPHIC_LOCATION("geographic location"),
 	ORGANISMAL_ENTITY("organismal entity"),
 	INDIVIDUAL_ORGANISM("individual organism"),
-	BIOLOGICAL_PROCESS("biological process"),
+	BIOLOGICAL_ENTITY("biological entity"),
+	PATHWAY("pathway"),
 	PHYSIOLOGY("physiology"),
+	PHYSIOLOGICAL_PROCESS("physiological process"),
+	BIOLOGICAL_PROCESS("biological process"),
 	INFORMATION_CONTENT_ENTITY("information content entity"),
 	PROCEDURE("procedure"),
 	PHENOMENON("phenomenon"),
-	VARIANT("variant"), 
+	SEQUENCE_VARIANT("sequence variant"), 
 	PHENOTYPE("phenotype"),
 	
 	// Association Types
@@ -159,6 +165,15 @@ public enum BiolinkTerm {
 	 */
 	public String getDefinition() {
 		// TODO: The actual definition should be loaded from the Biolink Model!
+		return label;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Enum#toString()
+	 */
+	@Override
+	public String toString() {
 		return label;
 	}
 }
