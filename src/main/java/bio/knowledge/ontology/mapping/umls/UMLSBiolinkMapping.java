@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
-
 import bio.knowledge.ontology.BiolinkClass;
 import bio.knowledge.ontology.BiolinkTerm;
 import bio.knowledge.ontology.mapping.BiolinkModelMapping;
@@ -20,7 +18,6 @@ import bio.knowledge.ontology.mapping.NameSpace;
  * @author richard
  *
  */
-@Component  // We tag this as a Spring Framework component for utility
 public class UMLSBiolinkMapping extends BiolinkModelMapping {
 
 	private static final long serialVersionUID = 373558122178877621L;
