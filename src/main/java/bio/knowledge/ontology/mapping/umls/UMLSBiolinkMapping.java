@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bio.knowledge.ontology.BiolinkClass;
 import bio.knowledge.ontology.BiolinkTerm;
 import bio.knowledge.ontology.mapping.BiolinkModelMapping;
@@ -21,6 +24,7 @@ import bio.knowledge.ontology.mapping.NameSpace;
 public class UMLSBiolinkMapping extends BiolinkModelMapping {
 
 	private static final long serialVersionUID = 373558122178877621L;
+	private static Logger _logger = LoggerFactory.getLogger(UMLSBiolinkMapping.class);
 	
 	public UMLSBiolinkMapping() {
 		
@@ -71,8 +75,12 @@ public class UMLSBiolinkMapping extends BiolinkModelMapping {
 		
 		for (String name : biolinkClasses) {
 			BiolinkClass c = classModelLookup.getClassByName(name);
-			classes.add(c);
-			classes.addAll(classInheritanceLookup.getDescendants(c));
+			if (c != null) {
+				classes.add(c);
+				classes.addAll(classInheritanceLookup.getDescendants(c));
+			} else {
+				_logger.info(name + " does not appear to be a BiolinkClass");
+			}
 		}
 		
 		biolinkClasses = classes.stream().map(c -> c.getName()).collect(Collectors.toList());
@@ -98,9 +106,11 @@ public class UMLSBiolinkMapping extends BiolinkModelMapping {
 	private String biolinkToUmls(String biolinkClassName) {
 		BiolinkClass biolinkClass = classModelLookup.getClassByName(biolinkClassName);
 		
-		for (String curie : biolinkClass.getMappings()) {
-			if (curie.startsWith(NameSpace.UMLSSG.getPrefix())) {
-				return curie;
+		if (biolinkClass != null) {
+			for (String curie : biolinkClass.getMappings()) {
+				if (curie.startsWith(NameSpace.UMLSSG.getPrefix())) {
+					return curie;
+				}
 			}
 		}
 		
