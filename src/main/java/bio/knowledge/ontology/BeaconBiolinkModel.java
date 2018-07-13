@@ -30,6 +30,8 @@ package bio.knowledge.ontology;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,6 +40,7 @@ import java.util.Optional;
 //import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
@@ -126,20 +129,52 @@ public class BeaconBiolinkModel {
 
 
 	public List<BiolinkSlot> getSlots() {
-		return slots;
+		return actualSlots;
 	}
 
 
 	public void setSlots(List<BiolinkSlot> slots) {
-		this.slots = slots;
+		this.actualSlots = slots;
 	}
 
 	public List<BiolinkClass> getClasses() {
-		return classes;
+		return actualClasses;
 	}
 
 
 	public void setClasses(List<BiolinkClass> classes) {
+		this.actualClasses = classes;
+	}
+
+	@JsonProperty("slots")
+	public HashMap<String, BiolinkSlot> getTempSlots() {
+		return slots;
+	}
+
+	@JsonProperty("slots")
+	public void setTempSlots(HashMap<String, BiolinkSlot> slots) {
+		for (String name : slots.keySet()) {
+			BiolinkSlot slot = slots.get(name);
+			slot.setName(name);
+			actualSlots.add(slot);
+		}
+		
+		this.slots = slots;
+	}
+
+	@JsonProperty("classes")
+	public HashMap<String, BiolinkClass> getTempClasses() {
+		return classes;
+	}
+
+	@JsonProperty("classes")
+	public void setTempClasses(HashMap<String, BiolinkClass> classes) {
+		for (String name : classes.keySet()) {
+			BiolinkClass biolinkClass = classes.get(name);
+			biolinkClass.setName(name);
+			actualClasses.add(biolinkClass);
+		}
+		
 		this.classes = classes;
 	}
 
@@ -149,7 +184,9 @@ public class BeaconBiolinkModel {
 	private Map<String, String> prefixes;
 	
 	private Object types;
-	private List<BiolinkSlot> slots;
-	private List<BiolinkClass> classes;
+	private HashMap<String, BiolinkSlot> slots;
+	private HashMap<String, BiolinkClass> classes;
+	private List<BiolinkSlot> actualSlots = new ArrayList<>();
+	private List<BiolinkClass> actualClasses = new ArrayList<>();
 	
 }
