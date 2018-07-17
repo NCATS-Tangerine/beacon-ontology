@@ -44,7 +44,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 /**
  * 
  * @author Richard
- *
+ * Older BiolinkModel (likely not actually being used)
  */
 public class BiolinkModel {
 	

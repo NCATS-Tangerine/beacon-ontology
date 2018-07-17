@@ -17,7 +17,7 @@ import bio.knowledge.ontology.mapping.NameSpace;
 public class Tests {
 	UmlsContainer umls = new UmlsContainer();
 	
-	BiolinkModel biolinkModel = BiolinkModel.get();
+	BeaconBiolinkModel biolinkModel = BeaconBiolinkModel.get();
 	
 	InheritanceLookup<BiolinkClass> classInheritanceLookup = new InheritanceLookup<BiolinkClass>(biolinkModel.getClasses());
 	InheritanceLookup<BiolinkSlot> slotInheritanceLookup = new InheritanceLookup<BiolinkSlot>(biolinkModel.getSlots());

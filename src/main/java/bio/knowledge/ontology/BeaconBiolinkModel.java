@@ -47,7 +47,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 /**
  * 
  * @author Richard
- *
+ * Newer BiolinkModel (used for Gradle tests and beacons)
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BeaconBiolinkModel {
@@ -57,6 +57,27 @@ public class BeaconBiolinkModel {
 	private static String BIOLINK_MODEL = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
 	
 	private static BeaconBiolinkModel model = null ;
+	
+	private String id;
+	private String name;
+	private String description;
+	private Map<String, String> prefixes;
+	
+	private Object types;
+	private HashMap<String, BiolinkSlot> slots;
+	private HashMap<String, BiolinkClass> classes;
+	private List<BiolinkSlot> actualSlots = new ArrayList<>();
+	private List<BiolinkClass> actualClasses = new ArrayList<>();
+	
+	public static BeaconBiolinkModel get() {
+		Optional<BeaconBiolinkModel> optional = BeaconBiolinkModel.load();
+		
+		if (!optional.isPresent()) {
+			throw new IllegalStateException("Could not load BiolinkModel");
+		} else {
+			return optional.get();
+		}
+	}
 	
 	public static Optional<BeaconBiolinkModel> load() {
 		
@@ -177,16 +198,5 @@ public class BeaconBiolinkModel {
 		
 		this.classes = classes;
 	}
-
-	private String id;
-	private String name;
-	private String description;
-	private Map<String, String> prefixes;
-	
-	private Object types;
-	private HashMap<String, BiolinkSlot> slots;
-	private HashMap<String, BiolinkClass> classes;
-	private List<BiolinkSlot> actualSlots = new ArrayList<>();
-	private List<BiolinkClass> actualClasses = new ArrayList<>();
 	
 }
