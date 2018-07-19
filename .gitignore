@@ -1,5 +1,6 @@
 bin/
 logs/
 build/
-.settings
+.settings/
 .classpath
+.gradle/
