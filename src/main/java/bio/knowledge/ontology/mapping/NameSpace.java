@@ -62,7 +62,7 @@ public enum NameSpace {
 	
 	UNIPROT("UNIPROT", "", BiolinkTerm.PROTEIN),  // Uniprot protein database - actually also "CHEM"...
 	
-	CHEBI("CHEBI", "", BiolinkTerm.CHEMICAL_SUBSTANCE),
+	CHEBI("CHEBI", "https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI%3A", BiolinkTerm.CHEMICAL_SUBSTANCE),
 	CHEMBL("CHEMBL", "https://www.ebi.ac.uk/chembl/compound/inspect/CHEMBL", BiolinkTerm.CHEMICAL_SUBSTANCE),
 	
 	DRUGBANK("DRUGBANK", "", BiolinkTerm.DRUG),

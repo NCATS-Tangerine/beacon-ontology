@@ -70,7 +70,7 @@ public class Ontology {
 		uriMapping.put("HTTPS://GARBANZO.SULAB.ORG",          NameSpace.WIKIDATA.getPrefix());
 		uriMapping.put("HTTPS://KBA.NCATS.IO/BEACON/BIOLINK", NameSpace.BIOLINK.getPrefix());
 		uriMapping.put("HTTPS://KBA.NCATS.IO/BEACON/NDEX",    NameSpace.UMLSSG.getPrefix());
-		
+
 		Optional<BeaconBiolinkModel> optional = BeaconBiolinkModel.load();
 		biolinkModel = optional.get();
 		
