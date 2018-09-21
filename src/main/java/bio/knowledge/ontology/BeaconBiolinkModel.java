@@ -54,7 +54,8 @@ public class BeaconBiolinkModel {
 	
 	//private static Logger _logger = LoggerFactory.getLogger(BeaconBiolinkModel.class);
 
-	private static String BIOLINK_MODEL = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
+	private static final String BIOLINK_MODEL_YAML_PATH = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
+	public static final String BIOLINK_MODEL_NAMESPACE = "BLM";
 	
 	private static BeaconBiolinkModel model = null ;
 	
@@ -89,7 +90,7 @@ public class BeaconBiolinkModel {
 		try {
 			
 			// Option 1: construct a standard ObjectMapper
-			yamlSource = new URL(BIOLINK_MODEL);
+			yamlSource = new URL(BIOLINK_MODEL_YAML_PATH);
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 			model = mapper.readValue(yamlSource, BeaconBiolinkModel.class);
 			
