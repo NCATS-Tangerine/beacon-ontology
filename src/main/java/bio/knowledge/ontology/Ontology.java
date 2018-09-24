@@ -183,7 +183,7 @@ public class Ontology {
 		if (biolinkTerm != null) {
 			return Optional.of(biolinkTerm);
 		} else {
-			_logger.warn("Ontology.getMapping(termId: '"+termId+"') has no Biolink Mapping?");
+			_logger.warn("Ontology.getMapping(): termId '"+termId+"' has no Biolink Mapping in namespace '"+namespace+"'?");
 			return Optional.empty();
 		}
 	}
