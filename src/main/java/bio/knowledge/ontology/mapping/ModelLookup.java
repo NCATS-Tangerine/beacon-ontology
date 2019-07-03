@@ -29,12 +29,17 @@ public class ModelLookup<T extends BiolinkEntityInterface> {
 	
 	public ModelLookup(List<T> entities, InheritanceLookup<T> inheritanceMap) {		
 		for (T c : entities) {
-			List<String> curies = c.getMappings();
-			
-			if (curies == null) {
-				continue;
+
+			Set<String> curies = new HashSet<>();
+
+			// Capture the canonical identifier of the entity
+			curies.add(c.getCurie());
+
+			List<String> mappings = c.getMappings();
+			if (mappings != null) {
+				curies.addAll(mappings);
 			}
-			
+
 			for (String curie : curies) {
 				if (mapping.containsKey(curie)) {
 					String msg1 = "%s maps to both %s and %s";

@@ -30,6 +30,17 @@ public class BiolinkSlot implements BiolinkEntityInterface {
 		return name;
 	}
 
+	public String getCurie() {
+
+		String curie = getSlotUri();
+
+		if (curie == null) {
+			curie = getDefaultCurie();
+		}
+
+		return curie;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

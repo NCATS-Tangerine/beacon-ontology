@@ -38,32 +38,35 @@ import bio.knowledge.ontology.mapping.NameSpace;
  */
 public interface BiolinkEntityInterface {
 	
-	public List<String> getMappings();
+	List<String> getMappings();
 
-	public void setMappings(List<String> mappings);
+	void setMappings(List<String> mappings);
 
-	public String getName();
+	String getName();
 
-	public void setName(String name);
+	void setName(String name);
 	
-	public String getObjectId();
+	String getObjectId();
 
-	public String getIs_a();
+	String getIs_a();
 	
-	public void setIs_a(String is_a);
+	void setIs_a(String is_a);
 
-	public String getDescription();
+	String getDescription();
 
-	public void setDescription(String description);
+	void setDescription(String description);
+
+	String getCurie();
 	
 	/**
-	 * Gets the CURIE ID of the given Biolink Model term.
+	 * Gets a "default" CURIE ID of a given Biolink Model term
+	 * in case an explicit curie is not available for a given ter
 	 */
-	public default String getCurie() {
+	default String getDefaultCurie() {
 		
-		String name = getName();
+		String id = getObjectId();
 		
-		if (name == null) {
+		if (id == null) {
 			return null;
 		} else {
 			return NameSpace.BIOLINK.getPrefix() + getObjectId();
@@ -73,7 +76,7 @@ public interface BiolinkEntityInterface {
 	/**
 	 * Gets the URI ID of the given Biolink Model term.
 	 */
-	public default String getUri() {
+	default String getUri() {
 		
 		String name = getName();
 		

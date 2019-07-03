@@ -35,6 +35,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import bio.knowledge.ontology.utils.Utils;
+import bio.knowledge.ontology.mapping.NameSpace;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BiolinkClass implements BiolinkEntityInterface {
@@ -76,7 +77,18 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	@JsonProperty(value = "see_also") private String see_also;
 	
 	private String schema;
-	
+
+	public String getCurie() {
+
+		String curie = getClassUri();
+
+		if (curie == null) {
+			curie = getDefaultCurie();
+		}
+
+		return curie;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -101,7 +113,6 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	public void setClassUri(String class_uri) {
 		this.class_uri = class_uri;
 	}
-
 
 	public String getIs_a() {
 		return is_a;
