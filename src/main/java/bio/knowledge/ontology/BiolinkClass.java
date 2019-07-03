@@ -28,6 +28,7 @@
 package bio.knowledge.ontology;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -56,7 +57,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	@JsonProperty(value = "subclass_of") private String subclass_of;
 	private List<String> aliases = new ArrayList<String>();
 
-	@JsonProperty(value = "local_names") private List<String> local_names;
+	@JsonProperty(value = "local_names") private Map<String,String> local_names;
 
 	@JsonProperty(value = "union_of") private List<String> union_of;
 
@@ -189,10 +190,10 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.union_of = union_of;
 	}
 
-	public List<String> getLocalNames() {
+	public Map<String,String> getLocalNames() {
 		return local_names;
 	}
-	public void setLocalNames(List<String> local_names) {
+	public void setLocalNames(Map<String,String> local_names) {
 		this.local_names = local_names;
 	}
 
