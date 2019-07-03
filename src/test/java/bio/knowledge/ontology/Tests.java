@@ -88,7 +88,11 @@ public class Tests {
 	public void classReverseMappingLookup() {
 		String biolinkClassName = "genome";
 		Set<String> curies = biolinkClassLookup.reverseLookup(biolinkClassName);
-		
+
+		/*
+		 SO:0001026 is a "class_uri" so needs to be
+		 uncovered by the reverseLookup in this manner now
+		 */
 		assertTrue(curies.contains("SO:0001026"));
 		assertTrue(curies.contains("SIO:000984"));
 		assertTrue(curies.contains("WD:Q7020"));

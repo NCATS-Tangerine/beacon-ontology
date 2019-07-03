@@ -40,6 +40,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	
 	private String name;
 	private String description;
+	@JsonProperty(value = "class_uri")  private String class_uri;
 	private String is_a;
 	private List<String> slots;
 	private Object slot_usage;
@@ -54,16 +55,18 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	
 	@JsonProperty(value = "subclass_of") private String subclass_of;
 	private List<String> aliases = new ArrayList<String>();
-	
+
+	@JsonProperty(value = "local_names") private List<String> local_names;
+
 	@JsonProperty(value = "union_of") private List<String> union_of;
-	
+
 	private List<String> mappings;
 	
 	private String notes;
 	
 	@JsonProperty(value = "id_prefixes") private List<String> id_prefixes;
 	
-	private String comment;
+	private List<String> comments;
 	
 	@JsonProperty(value = "defining_slots") private List<String> defining_slots;
 	
@@ -90,6 +93,14 @@ public class BiolinkClass implements BiolinkEntityInterface {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getClassUri() {
+		return class_uri;
+	}
+	public void setClassUri(String class_uri) {
+		this.class_uri = class_uri;
+	}
+
 
 	public String getIs_a() {
 		return is_a;
@@ -178,6 +189,13 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.union_of = union_of;
 	}
 
+	public List<String> getLocalNames() {
+		return local_names;
+	}
+	public void setLocalNames(List<String> local_names) {
+		this.local_names = local_names;
+	}
+
 	public List<String> getMappings() {
 		return mappings;
 	}
@@ -199,11 +217,11 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.id_prefixes = id_prefixes;
 	}
 
-	public String getComment() {
-		return comment;
+	public List<String> getComments() {
+		return comments;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setComment(List<String> comments) {
+		this.comments = comments;
 	}
 
 	public List<String> getDefiningSlots() {

@@ -13,9 +13,12 @@ public class BiolinkSlot implements BiolinkEntityInterface {
 	private String name;
 	private String description;
 	private List<String> mappings;
+	@JsonProperty(value = "slot_uri") private String slot_uri;
 	private String is_a;
+	@JsonProperty(value = "in_subset") private List<String> in_subset;
 	private String domain;
 	private String range;
+	private String inverse;
 	private Boolean mixin;
 	private Boolean required;
 	private List<String> aliases;
@@ -51,12 +54,28 @@ public class BiolinkSlot implements BiolinkEntityInterface {
 		this.mappings = mappings;
 	}
 
+	public String getSlotUri() {
+		return slot_uri;
+	}
+
+	public void setSlotUri(String slot_uri) {
+		this.slot_uri = slot_uri;
+	}
+
 	public String getIs_a() {
 		return is_a;
 	}
 
 	public void setIs_a(String is_a) {
 		this.is_a = is_a;
+	}
+
+	public List<String> getInSubset() {
+		return in_subset;
+	}
+
+	public void setInSubset(List<String> in_subset) {
+		this.in_subset = in_subset;
 	}
 
 	public String getDomain() {
@@ -73,6 +92,14 @@ public class BiolinkSlot implements BiolinkEntityInterface {
 
 	public void setRange(String range) {
 		this.range = range;
+	}
+
+	public String getInverse() {
+		return inverse;
+	}
+
+	public void setInverse(String inverse) {
+		this.inverse = inverse;
 	}
 
 	public Boolean getMixin() {
