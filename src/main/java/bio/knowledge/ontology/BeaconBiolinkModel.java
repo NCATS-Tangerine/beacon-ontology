@@ -28,7 +28,7 @@
 
 package bio.knowledge.ontology;
 
-import java.io.IOException;
+import java.lang.Exception;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +94,7 @@ public class BeaconBiolinkModel {
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 			model = mapper.readValue(yamlSource, BeaconBiolinkModel.class);
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Optional.empty();
 		}
