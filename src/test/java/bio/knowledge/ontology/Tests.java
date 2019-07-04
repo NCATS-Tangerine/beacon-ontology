@@ -100,15 +100,16 @@ public class Tests {
 		assertTrue(curies.size() == 3);
 	}
 	
-	@Test @Ignore
+	@Test
 	public void slotReverseMappingLookup() {
 		String biolinkSlotName = "causes";
 		Set<String> curies = biolinkSlotLookup.reverseLookup(biolinkSlotName);
-		
+
 		assertTrue(curies.contains("RO:0002410"));
 		assertTrue(curies.contains("SEMMEDDB:CAUSES"));
-		
-		assertTrue(curies.size() == 2);
+		assertTrue(curies.contains("WD:P1542"));
+
+		assertTrue(curies.size() == 3);
 	}
 	
 	@Test
