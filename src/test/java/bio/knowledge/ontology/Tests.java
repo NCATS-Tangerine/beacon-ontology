@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
-import org.junit.Ignore;
 //import org.junit.Ignore;
 import org.junit.Test;
 
@@ -26,12 +25,9 @@ public class Tests {
 	ModelLookup<BiolinkSlot> biolinkSlotLookup = new ModelLookup<BiolinkSlot>(biolinkModel.getSlots(), slotInheritanceLookup);
 	
 	String UMLS_GROUP_PREFIX = "UMLSSG:";
-	String UMLS_TYPE_PREFIX = "UMLSST:";
+	String UMLS_CODE_PREFIX  = "UMLSSC:";
+	String UMLS_TYPE_PREFIX  = "UMLSST:";
 
-	/*
-	 *  TODO: we know that not all of the UMLS categories and types are mapped to Biolink
-	 *   so these tests will fail, so we ignore them for now?
-	 */
 	@Test
 	public void testUmlsCategories() {
 		for (String category : umls.getUmlsCategories()) {
@@ -42,7 +38,18 @@ public class Tests {
 			}
 		}
 	}
-	
+
+	@Test
+	public void testUmlsCodes() {
+		for (String code : umls.getUmlsCodes()) {
+			BiolinkClass c = biolinkClassLookup.lookup(UMLS_CODE_PREFIX + code);
+			if (c == null) {
+				System.err.println("Warning: UMLS Semantic Code '"+code+"' not mapped to Biolink?");
+				// fail(code + " was not mapped");
+			}
+		}
+	}
+
 	@Test
 	public void testUmlsTypes() {
 		for (String type : umls.getUmlsTypes()) {
@@ -53,7 +60,7 @@ public class Tests {
 			}
 		}
 	}
-	
+
 	@Test
 	public void classInheritanceLookup() {
 		BiolinkClass c = biolinkClassLookup.lookup("SIO:010004");
