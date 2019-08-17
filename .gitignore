@@ -5,3 +5,7 @@ build/
 .classpath
 .gradle/
 out/
+
+# IntelliJ IDE metadata ignored
+.idea/
+*.iml
