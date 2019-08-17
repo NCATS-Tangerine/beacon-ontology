@@ -94,8 +94,7 @@ public class BeaconBiolinkModel {
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 			model = mapper.readValue(yamlSource, BeaconBiolinkModel.class);
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) { e.printStackTrace();
 			return Optional.empty();
 		}
 		return Optional.of(model);
