@@ -72,7 +72,10 @@ public class Ontology {
 		uriMapping.put("HTTPS://KBA.NCATS.IO/BEACON/NDEX",    NameSpace.UMLSSG.getPrefix());
 
 		Optional<BeaconBiolinkModel> optional = BeaconBiolinkModel.load();
-		biolinkModel = optional.get();
+		if(optional.isPresent()) {
+			biolinkModel = optional.get();
+		} else
+			throw new RuntimeException("Beacon Ontology ERROR: Biolink Model loading unsuccessful?");
 		
 		classInheritanceLookup = new InheritanceLookup<BiolinkClass>(biolinkModel.getClasses());
 		slotInheritanceLookup = new InheritanceLookup<BiolinkSlot>(biolinkModel.getSlots());
