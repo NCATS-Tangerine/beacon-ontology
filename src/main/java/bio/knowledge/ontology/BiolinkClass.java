@@ -64,7 +64,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 
 	private List<String> mappings;
 	
-	private String notes;
+	private List<String> notes;
 	
 	@JsonProperty(value = "id_prefixes") private List<String> id_prefixes;
 	
@@ -215,10 +215,10 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.mappings = mappings;
 	}
 
-	public String getNotes() {
+	public List<String> getNotes() {
 		return notes;
 	}
-	public void setNotes(String notes) {
+	public void setNotes(List<String> notes) {
 		this.notes = notes;
 	}
 
