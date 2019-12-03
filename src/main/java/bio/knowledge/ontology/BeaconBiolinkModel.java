@@ -55,8 +55,8 @@ public class BeaconBiolinkModel {
 	//private static Logger _logger = LoggerFactory.getLogger(BeaconBiolinkModel.class);
 
 	private static final String BIOLINK_MODEL_YAML_PATH = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
-	public static final String BIOLINK_MODEL_NAMESPACE = "BLM";
-	
+	public static final String BIOLINK_MODEL_NAMESPACE = "biolink";
+
 	private static BeaconBiolinkModel model = null ;
 	
 	private String id;

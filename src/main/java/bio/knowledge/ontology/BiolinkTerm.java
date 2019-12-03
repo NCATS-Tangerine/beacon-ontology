@@ -79,7 +79,7 @@ public enum BiolinkTerm {
 	private final String label;
 	private final String objectId;
 	
-	private BiolinkTerm(String label) {
+	BiolinkTerm(String label) {
 		this.label = label;
 		this.objectId = getObjectId(label);
 	}

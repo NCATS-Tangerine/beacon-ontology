@@ -89,14 +89,14 @@ public enum NameSpace {
 	
 	OBO("OBO","http://purl.obolibrary.org/obo/", BiolinkTerm.INFORMATION_CONTENT_ENTITY),
 	
-	BIOLINK("BLM","http://bioentity.io/vocab/", BiolinkTerm.NAMED_THING)
+	BIOLINK("biolink","https://w3id.org/biolink/vocab/", BiolinkTerm.NAMED_THING)
 	;
 	
 	private final String prefix;
 	private final String baseIri;
 	private final BiolinkTerm defaultConceptType;
 	
-	private NameSpace(String prefix, String baseIri, BiolinkTerm conceptType) {
+	NameSpace(String prefix, String baseIri, BiolinkTerm conceptType) {
 		this.prefix  = prefix;
 		this.baseIri = baseIri;
 		this.defaultConceptType = conceptType;
