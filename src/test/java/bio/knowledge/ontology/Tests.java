@@ -15,15 +15,15 @@ import bio.knowledge.ontology.mapping.NameSpace;
 
 public class Tests {
 	UmlsContainer umls = new UmlsContainer();
-	
+
 	BeaconBiolinkModel biolinkModel = BeaconBiolinkModel.get();
-	
+
 	InheritanceLookup<BiolinkClass> classInheritanceLookup = new InheritanceLookup<BiolinkClass>(biolinkModel.getClasses());
 	InheritanceLookup<BiolinkSlot> slotInheritanceLookup = new InheritanceLookup<BiolinkSlot>(biolinkModel.getSlots());
-	
+
 	ModelLookup<BiolinkClass> biolinkClassLookup = new ModelLookup<BiolinkClass>(biolinkModel.getClasses(), classInheritanceLookup);
 	ModelLookup<BiolinkSlot> biolinkSlotLookup = new ModelLookup<BiolinkSlot>(biolinkModel.getSlots(), slotInheritanceLookup);
-	
+
 	String UMLS_GROUP_PREFIX = "UMLSSG:";
 	String UMLS_CODE_PREFIX  = "UMLSSC:";
 	String UMLS_TYPE_PREFIX  = "UMLSST:";
@@ -64,33 +64,33 @@ public class Tests {
 	@Test
 	public void classInheritanceLookup() {
 		BiolinkClass c = biolinkClassLookup.lookup("SIO:010004");
-		
+
 		assertEquals(c.getName(), "chemical substance");
-		
+
 		BiolinkClass parent = classInheritanceLookup.getParent(c);
-		
+
 		assertEquals(parent.getName(), "molecular entity");
-		
+
 		Set<BiolinkClass> children = classInheritanceLookup.getChildren(parent);
-		
+
 		assertTrue(children.contains(c));
 	}
-	
+
 	@Test
 	public void slotInheritanceLookup() {
 		BiolinkSlot slot = biolinkSlotLookup.lookup("SEMMEDDB:INHIBITS");
-		
+
 		assertEquals(slot.getName(), "negatively regulates, entity to entity");
-		
+
 		BiolinkSlot parent = slotInheritanceLookup.getParent(slot);
-		
+
 		assertEquals(parent.getName(), "regulates, entity to entity");
-		
+
 		Set<BiolinkSlot> children = slotInheritanceLookup.getChildren(parent);
-		
+
 		assertTrue(children.contains(slot));
 	}
-	
+
 	@Test
 	public void classReverseMappingLookup() {
 		String biolinkClassName = "genome";
@@ -102,11 +102,11 @@ public class Tests {
 		 */
 		assertTrue(curies.contains("SO:0001026"));
 		assertTrue(curies.contains("SIO:000984"));
-		assertTrue(curies.contains("WD:Q7020"));
-		
+		assertTrue(curies.contains("WIKIDATA:Q7020"));
+
 		assertTrue(curies.size() == 3);
 	}
-	
+
 	@Test
 	public void slotReverseMappingLookup() {
 		String biolinkSlotName = "causes";
@@ -114,21 +114,22 @@ public class Tests {
 
 		assertTrue(curies.contains("RO:0002410"));
 		assertTrue(curies.contains("SEMMEDDB:CAUSES"));
-		assertTrue(curies.contains("WD:P1542"));
+		assertTrue(curies.contains("WIKIDATA:P1542"));
+		assertTrue(curies.contains("MONDO:disease_triggers"));
 
 		assertTrue(curies.size() == 3);
 	}
-	
+
 	@Test
 	public void nameSpaceTests() {
-		
+
 		String biolinkTerm = "molecular entity";
-		
+
 		String biolinkCurie = NameSpace.BIOLINK.getCurie(biolinkTerm);
-		assertEquals(biolinkCurie,"biolink:MolecularEntity");
-		
+		assertEquals(biolinkCurie,"BLM:MolecularEntity");
+
 		String biolinkIri = NameSpace.BIOLINK.getUri(biolinkTerm);
-		assertEquals(biolinkIri,"https://w3id.org/biolink/vocab/MolecularEntity");
+		assertEquals(biolinkIri,"http://bioentity.io/vocab/MolecularEntity");
 	}
 
 }
