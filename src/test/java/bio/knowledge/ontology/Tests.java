@@ -100,11 +100,12 @@ public class Tests {
 		 SO:0001026 is a "class_uri" so needs to be
 		 uncovered by the reverseLookup in this manner now
 		 */
+		assertTrue(curies.contains("biolink:Genome"));
 		assertTrue(curies.contains("SO:0001026"));
 		assertTrue(curies.contains("SIO:000984"));
 		assertTrue(curies.contains("WIKIDATA:Q7020"));
 
-		assertTrue(curies.size() == 3);
+		assertTrue(curies.size() == 4);
 	}
 
 	@Test
@@ -112,12 +113,13 @@ public class Tests {
 		String biolinkSlotName = "causes";
 		Set<String> curies = biolinkSlotLookup.reverseLookup(biolinkSlotName);
 
+		assertTrue(curies.contains("biolink:causes"));
 		assertTrue(curies.contains("RO:0002410"));
 		assertTrue(curies.contains("SEMMEDDB:CAUSES"));
 		assertTrue(curies.contains("WIKIDATA:P1542"));
 		assertTrue(curies.contains("MONDO:disease_triggers"));
 
-		assertTrue(curies.size() == 3);
+		assertTrue(curies.size() == 5);
 	}
 
 	@Test
@@ -126,10 +128,10 @@ public class Tests {
 		String biolinkTerm = "molecular entity";
 
 		String biolinkCurie = NameSpace.BIOLINK.getCurie(biolinkTerm);
-		assertEquals(biolinkCurie,"BLM:MolecularEntity");
+		assertEquals(biolinkCurie,"biolink:MolecularEntity");
 
 		String biolinkIri = NameSpace.BIOLINK.getUri(biolinkTerm);
-		assertEquals(biolinkIri,"http://bioentity.io/vocab/MolecularEntity");
+		assertEquals(biolinkIri,NameSpace.BIOLINK.getBaseUri()+"MolecularEntity");
 	}
 
 }

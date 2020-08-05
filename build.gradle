@@ -28,9 +28,9 @@ dependencies {
     
     // https://mvnrepository.com/artifact/org.apache.commons/commons-text
 	compile group: 'org.apache.commons', name: 'commons-text', version: '1.2'
-	
-	// https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-	testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+
+	// https://mvnrepository.com/artifact/org.slf4j/com.springsource.slf4j.org.apache.commons.logging
+	compile group: 'org.slf4j', name: 'com.springsource.slf4j.org.apache.commons.logging', version: '1.6.1'
 	
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.4'
