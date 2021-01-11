@@ -81,74 +81,70 @@ public class Ontology {
 	}
 	
 	/**
-	 *
-	 * @return
+	 * @return ModelLookup catalog of Biolink classes (categories and  associations)
 	 */
 	protected ModelLookup getClassLookup() {
 		return classLookup;
 	}
 	
 	/**
-	 *
-	 * @return
+	 * @return ModelLookup catalog of Biolink slots (e.g. predicates)
 	 */
 	protected ModelLookup getSlotLookup() {
 		return slotLookup;
 	}
 	
 	/**
-	 * 
-	 * @param biolinkTerm
-	 * @return
+	 * Find BiolinkClass wrapped class, by Biolink term identifier
+	 * @param biolinkTerm whose BiolinkEntity is to be returned
+	 * @return Optional of a BiolinkEntity wrapped class
 	 */
-	public Optional<BiolinkEntity> getClassByName(BiolinkTerm biolinkTerm) {
+	public Optional<BiolinkClass> getClassByName(BiolinkTerm biolinkTerm) {
 		return getClassByName(biolinkTerm.getLabel());
 	}
-	
+
 	/**
-	 * 
-	 * @param biolinkClassName
-	 * @return
-	 */
-	public Optional<BiolinkEntity> getClassByName(String biolinkClassName) {
-		BiolinkEntity biolinkClass = classLookup.getClassByName(biolinkClassName);
+	 * Find BiolinkEntity wrapped class, by Biolink class name
+	 * @param biolinkClassName String name of Biolink class whose BiolinkEntity is to be returned
+	 * @return Optional of a BiolinkEntity wrapped class
+	*/
+	public Optional<BiolinkClass> getClassByName(String biolinkClassName) {
+		BiolinkClass biolinkClass = classLookup.getClassByName(biolinkClassName);
 		return Optional.ofNullable(biolinkClass);
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return BiolinkEntity corresponding to the default Biolink category class
 	 */
-	public BiolinkEntity getDefaultCategory() {
+	public BiolinkClass getDefaultCategory() {
 		String DEFAULT_CATEGORY = "named thing";
 		return classLookup.getClassByName(DEFAULT_CATEGORY);
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @return BiolinkEntity corresponding to the default Biolink predicate
 	 */
-	public BiolinkEntity getDefaultPredicate() {
+	public BiolinkSlot getDefaultPredicate() {
 		String DEFAULT_PREDICATE = "related to";
-		return slotLookup.getClassByName(DEFAULT_PREDICATE);
+		return slotLookup.getSlotByName(DEFAULT_PREDICATE);
 	}
 
 	/**
-	 * 
-	 * @param biolinkSlotName
-	 * @return
+	 * Find BiolinkEntity wrapped class, by Biolink slot name
+	 * @param biolinkSlotName String name of Biolink slot whose BiolinkEntity is to be returned
+	 * @return Optional of a BiolinkEntity wrapped class
 	 */
-	public Optional<BiolinkEntity> getSlotByName(String biolinkSlotName) {
-		BiolinkEntity slot = slotLookup.getClassByName(biolinkSlotName);
+	public Optional<BiolinkSlot> getSlotByName(String biolinkSlotName) {
+		BiolinkSlot slot = slotLookup.getSlotByName(biolinkSlotName);
 		return Optional.ofNullable(slot);
 	}
 	
 	/**
-	 * 
-	 * @param namespace
-	 * @param termId
-	 * @param modelLookup
-	 * @return
+	 * Get mapping for given namespace or term identifier in target ModelLookup catalog.
+	 * @param namespace string name of a term's namespace.
+	 * @param termId string identifier of a term.
+	 * @param modelLookup target ModelLookup catalog of Biolink entities
+	 * @return Optional of an associated BiolinkEntity matched by term id from the catalog
 	 */
 	public Optional<BiolinkEntity> getMapping(
 			String namespace, 

@@ -8,8 +8,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import bio.knowledge.ontology.BiolinkClass;
 import bio.knowledge.ontology.BiolinkEntity;
 
+import bio.knowledge.ontology.BiolinkSlot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,11 +136,18 @@ public class ModelLookup {
 		BiolinkEntity c = lookup(curie);
 		return c != null ? c.getName() : null;
 	}
-	
+
+	/* *
+	 * Method not used?
+	 * Looks up description
+	 * @param curie whose description is to be returned
+	 * @return String of description
+	 * /
 	public String lookupDescription(String curie) {
 		BiolinkEntity c = lookup(curie);
 		return c != null ? c.getDescription() : "";
 	}
+	*/
 	
 	/**
 	 * Gets the set of curies that map onto the given T name
@@ -148,7 +157,11 @@ public class ModelLookup {
 		return Collections.unmodifiableSet(set != null ? set : new HashSet<>());
 	}
 
-	public BiolinkEntity getClassByName(String biolinkClassName) {
-		return nameMapping.get(biolinkClassName);
+	public BiolinkSlot getSlotByName(String biolinkSlotName) {
+		return (BiolinkSlot) nameMapping.get(biolinkSlotName);
+	}
+
+	public BiolinkClass getClassByName(String biolinkClassName) {
+		return (BiolinkClass)nameMapping.get(biolinkClassName);
 	}
 }
