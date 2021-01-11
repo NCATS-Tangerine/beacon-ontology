@@ -8,10 +8,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import bio.knowledge.ontology.BiolinkEntity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import bio.knowledge.ontology.BiolinkEntity;
 
 /**
  * 

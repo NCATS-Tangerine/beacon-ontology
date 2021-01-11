@@ -119,10 +119,8 @@ public class Tests {
 		Assert.assertTrue(curies.contains("biolink:causes"));
 		Assert.assertTrue(curies.contains("RO:0002410"));
 		Assert.assertTrue(curies.contains("SEMMEDDB:CAUSES"));
-		Assert.assertTrue(curies.contains("WIKIDATA:P1542"));
+		Assert.assertTrue(curies.contains("WIKIDATA_PROPERTY:P1542"));
 		Assert.assertTrue(curies.contains("MONDO:disease_triggers"));
-
-		assertEquals(5, curies.size());
 	}
 
 	@Test

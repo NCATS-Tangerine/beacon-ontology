@@ -27,7 +27,6 @@
  */
 package bio.knowledge.ontology;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bio.knowledge.ontology.mapping.NameSpace;
@@ -114,28 +113,17 @@ abstract public class BiolinkEntity {
 	}
 
 	/**
-	 * Gets the URI ID of the given Biolink Model term.
+	 * @return URI of the given Biolink Model term.
 	 */
 	public String getUri() {
-
-		String name = getName();
-
-		if (name == null) {
-			return null;
-		} else {
-			return NameSpace.BIOLINK.getBaseUri() + getObjectId();
-		}
+		return NameSpace.BIOLINK.getBaseUri() + getObjectId();
 	}
 
+	/**
+	 * @return the CURIE of the given Biolink Model term.
+	 */
 	public String getCurie() {
-
-		String curie = getUri();
-
-		if (curie == null) {
-			curie = getDefaultCurie();
-		}
-
-		return curie;
+		return NameSpace.BIOLINK.getPrefix() + getObjectId();
 	}
 
 	@JsonProperty(value = "in_subset") private List<String> in_subset;
