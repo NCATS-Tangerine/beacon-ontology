@@ -28,13 +28,11 @@
 package bio.knowledge.ontology.mapping;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import bio.knowledge.ontology.BiolinkClass;
-import bio.knowledge.ontology.BiolinkModel;
-import bio.knowledge.ontology.BiolinkSlot;
-import bio.knowledge.ontology.BiolinkTerm;
+import bio.knowledge.ontology.*;
 
 /**
  * @author richard
@@ -43,33 +41,24 @@ import bio.knowledge.ontology.BiolinkTerm;
 public class BiolinkModelMapping extends HashMap<String, BiolinkTerm> {
 
 	private static final long serialVersionUID=1234687328782964210L;
+
+	protected InheritanceLookup classInheritanceLookup;
+	protected ModelLookup classModelLookup;
 	
-	private BiolinkModel biolinkModel;
-	
-	protected InheritanceLookup<BiolinkClass> classInheritanceLookup;
-	protected ModelLookup<BiolinkClass> classModelLookup;
-	
-	protected InheritanceLookup<BiolinkSlot> slotInheritanceLookup;
-	protected ModelLookup<BiolinkSlot> slotModelLookup;
+	protected InheritanceLookup slotInheritanceLookup;
+	protected ModelLookup slotModelLookup;
 	
 	@PostConstruct
 	void init() {
-		biolinkModel = BiolinkModel.get();
-		
-		classInheritanceLookup = new InheritanceLookup<BiolinkClass>(biolinkModel.getClasses());
-		classModelLookup = new ModelLookup<BiolinkClass>(biolinkModel.getClasses(), classInheritanceLookup);
-		
-		slotInheritanceLookup = new InheritanceLookup<BiolinkSlot>(biolinkModel.getSlots());
-		slotModelLookup = new ModelLookup<BiolinkSlot>(biolinkModel.getSlots(), slotInheritanceLookup);
-	}
-	
-	/**
-	 * 
-	 * @param curie
-	 * @return
-	 */
-	public String termCurieToBiolinkDescription(String curie) {
-		return classModelLookup.lookupDescription(curie);
+		BiolinkModel biolinkModel = BiolinkModel.get();
+
+		List<? extends BiolinkEntity> classes = biolinkModel.getClasses();
+		classInheritanceLookup = new InheritanceLookup(classes);
+		classModelLookup = new ModelLookup(classes, classInheritanceLookup);
+
+		List<? extends BiolinkEntity> slots = biolinkModel.getSlots() ;
+		slotInheritanceLookup = new InheritanceLookup(slots);
+		slotModelLookup = new ModelLookup(slots, slotInheritanceLookup);
 	}
 
 }

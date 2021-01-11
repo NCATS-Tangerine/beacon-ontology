@@ -30,19 +30,18 @@ dependencies {
     
     // https://mvnrepository.com/artifact/org.apache.commons/commons-text
 	compile group: 'org.apache.commons', name: 'commons-text', version: '1.2'
-	
+
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	api group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
 	// https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-	testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
-	
+	api group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.4'
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
 	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.4'
-		
-	
-	
-    
-}
 
+}

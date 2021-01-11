@@ -43,6 +43,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -52,7 +54,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class BeaconBiolinkModel {
 	
-	//private static Logger _logger = LoggerFactory.getLogger(BeaconBiolinkModel.class);
+	private static Logger _logger = LoggerFactory.getLogger(BeaconBiolinkModel.class);
 
 	private static final String BIOLINK_MODEL_YAML_PATH = "https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.yaml";
 	public static final String BIOLINK_MODEL_NAMESPACE = "biolink";
@@ -62,15 +64,19 @@ public class BeaconBiolinkModel {
 	private String id;
 	private String name;
 	private String description;
+	private String license;
+	private String version;
+
 	private Map<String, String> prefixes;
 	
 	private Object types;
 	private HashMap<String, BiolinkSlot> slots;
 	private HashMap<String, BiolinkClass> classes;
-	private List<BiolinkSlot> actualSlots = new ArrayList<>();
+	private List<BiolinkSlot>  actualSlots   = new ArrayList<>();
 	private List<BiolinkClass> actualClasses = new ArrayList<>();
 	
 	public static BeaconBiolinkModel get() {
+
 		Optional<BeaconBiolinkModel> optional = BeaconBiolinkModel.load();
 		
 		if (!optional.isPresent()) {
@@ -93,13 +99,16 @@ public class BeaconBiolinkModel {
 			yamlSource = new URL(BIOLINK_MODEL_YAML_PATH);
 			ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 			model = mapper.readValue(yamlSource, BeaconBiolinkModel.class);
-			
-		} catch (Exception e) { e.printStackTrace();
+
+			if(model!=null) {
+				_logger.info("Model: '"+model.name+"' loaded successfully!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 			return Optional.empty();
 		}
 		return Optional.of(model);
 	}
-	
 
 	public String getId() {
 		return id;
@@ -108,52 +117,51 @@ public class BeaconBiolinkModel {
 		this.id = id;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
-
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	public String getLicense() {
+		return license;
+	}
+	public void setLicense(String license) {
+		this.license = license;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
 	public Map<String, String> getPrefixes() {
 		return prefixes;
 	}
-
-
 	public void setPrefixes(Map<String, String> prefixes) {
 		this.prefixes = prefixes;
 	}
 
-
 	public Object getTypes() {
 		return types;
 	}
-
-
 	public void setTypes(Object types) {
 		this.types = types;
 	}
 
-
 	public List<BiolinkSlot> getSlots() {
 		return actualSlots;
 	}
-
-
 	public void setSlots(List<BiolinkSlot> slots) {
 		this.actualSlots = slots;
 	}
@@ -161,8 +169,6 @@ public class BeaconBiolinkModel {
 	public List<BiolinkClass> getClasses() {
 		return actualClasses;
 	}
-
-
 	public void setClasses(List<BiolinkClass> classes) {
 		this.actualClasses = classes;
 	}

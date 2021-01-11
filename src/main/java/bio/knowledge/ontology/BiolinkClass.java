@@ -27,7 +27,6 @@
  */
 package bio.knowledge.ontology;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
@@ -35,92 +34,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import bio.knowledge.ontology.utils.Utils;
-import bio.knowledge.ontology.mapping.NameSpace;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class BiolinkClass implements BiolinkEntityInterface {
-	
-	private String name;
-	private String description;
-	@JsonProperty(value = "class_uri")  private String class_uri;
-	private String is_a;
-	private List<String> slots;
-	private Object slot_usage;
-	private Boolean mixin;
-	private List<String> flags;
-	
-	@JsonProperty(value = "abstract") private Boolean _abstract;
-	
-	private List<String> mixins;
-	
-	@JsonProperty(value = "values_from") private List<String> values_from;
-	
-	@JsonProperty(value = "subclass_of") private String subclass_of;
-	private List<String> aliases = new ArrayList<String>();
-
-	@JsonProperty(value = "local_names") private Map<String,String> local_names;
-
-	@JsonProperty(value = "union_of") private List<String> union_of;
-
-	private List<String> mappings;
-	
-	private List<String> notes;
-	
-	@JsonProperty(value = "id_prefixes") private List<String> id_prefixes;
-	
-	private List<String> comments;
-	
-	@JsonProperty(value = "defining_slots") private List<String> defining_slots;
-	
-	private Boolean symmetric;
-	
-	@JsonProperty(value = "see_also") private String see_also;
-	
-	private String schema;
-
-	public String getCurie() {
-
-		String curie = getClassUri();
-
-		if (curie == null) {
-			curie = getDefaultCurie();
-		}
-
-		return curie;
-	}
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+public class BiolinkClass extends BiolinkEntity {
 
 	public String getObjectId() {
-		return Utils.toUpperCamelCase(name);
+		return Utils.toUpperCamelCase(getName());
 	}
 
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getClassUri() {
-		return class_uri;
-	}
-	public void setClassUri(String class_uri) {
-		this.class_uri = class_uri;
-	}
-
-	public String getIs_a() {
-		return is_a;
-	}
-	public void setIs_a(String is_a) {
-		this.is_a = is_a;
-	}
-
+	@JsonProperty(value = "slots") private List<String> slots;
 	public List<String> getSlots() {
 		return slots;
 	}
@@ -128,6 +50,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.slots = slots;
 	}
 
+	@JsonProperty(value = "slot_usage") private Object slot_usage;
 	public Object getSlot_usage() {
 		return slot_usage;
 	}
@@ -135,23 +58,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.slot_usage = slot_usage;
 	}
 
-	// Don't know if this is a unique tag in the model, but...
-    @JsonProperty(value = "subproperty_of") private String subproperty_of;
-
-    public String getSubproperty_of() {
-        return subproperty_of;
-    }
-    public void setSubproperty_of(String subproperty_of) {
-        this.subclass_of = subproperty_of;
-    }
-
-	public Boolean getMixin() {
-		return mixin;
-	}
-	public void setMixin(Boolean mixin) {
-		this.mixin = mixin;
-	}
-
+	@JsonProperty(value = "flags") private List<String> flags;
 	public List<String> getFlags() {
 		return flags;
 	}
@@ -159,20 +66,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.flags = flags;
 	}
 
-	public Boolean isAbstract() {
-		return _abstract;
-	}
-	public void setIsAbstract(Boolean _abstract) {
-		this._abstract = _abstract;
-	}
-
-	public List<String> getMixins() {
-		return mixins;
-	}
-	public void setMixins(List<String> mixins) {
-		this.mixins = mixins;
-	}
-
+	@JsonProperty(value = "values_from") private List<String> values_from;
 	public List<String> getValuesFrom() {
 		return values_from;
 	}
@@ -180,20 +74,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.values_from = values_from;
 	}
 
-	public String getSubclassOf() {
-		return subclass_of;
-	}
-	public void setSubclassOf(String subclass_of) {
-		this.subclass_of = subclass_of;
-	}
-
-	public List<String> getAliases() {
-		return aliases;
-	}
-	public void setAliases(List<String> aliases) {
-		this.aliases = aliases;
-	}
-
+	@JsonProperty(value = "union_of") private List<String> union_of;
 	public List<String> getUnionOf() {
 		return union_of;
 	}
@@ -201,6 +82,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.union_of = union_of;
 	}
 
+	@JsonProperty(value = "local_names") private Map<String,String> local_names;
 	public Map<String,String> getLocalNames() {
 		return local_names;
 	}
@@ -208,13 +90,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.local_names = local_names;
 	}
 
-	public List<String> getMappings() {
-		return mappings;
-	}
-	public void setMappings(List<String> mappings) {
-		this.mappings = mappings;
-	}
-
+	@JsonProperty(value = "notes") private List<String> notes;
 	public List<String> getNotes() {
 		return notes;
 	}
@@ -222,6 +98,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.notes = notes;
 	}
 
+	@JsonProperty(value = "id_prefixes") private List<String> id_prefixes;
 	public List<String> getIdPrefixes() {
 		return id_prefixes;
 	}
@@ -229,6 +106,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.id_prefixes = id_prefixes;
 	}
 
+	@JsonProperty(value = "comments") private List<String> comments;
 	public List<String> getComments() {
 		return comments;
 	}
@@ -236,6 +114,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.comments = comments;
 	}
 
+	@JsonProperty(value = "defining_slots") private List<String> defining_slots;
 	public List<String> getDefiningSlots() {
 		return defining_slots;
 	}
@@ -243,6 +122,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.defining_slots = defining_slots;
 	}
 
+	@JsonProperty(value = "symmetric") private Boolean symmetric;
 	public Boolean getSymmetric() {
 		return symmetric;
 	}
@@ -250,6 +130,7 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.symmetric = symmetric;
 	}
 
+	@JsonProperty(value = "see_also") private String see_also;
 	public String getSeeAlso() {
 		return see_also;
 	}
@@ -257,13 +138,6 @@ public class BiolinkClass implements BiolinkEntityInterface {
 		this.see_also = see_also;
 	}
 
-	public String getSchema() {
-		return schema;
-	}
-	public void setSchema(String schema) {
-		this.schema = schema;
-	}
-	
 	@Override
 	public String toString() {
 		return super.toString() + "[name=" + getName() + "]";
