@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import bio.knowledge.ontology.BiolinkEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import bio.knowledge.ontology.BiolinkClass;
 import bio.knowledge.ontology.BiolinkTerm;
 import bio.knowledge.ontology.mapping.BiolinkModelMapping;
 import bio.knowledge.ontology.mapping.NameSpace;
@@ -71,10 +71,10 @@ public class UMLSBiolinkMapping extends BiolinkModelMapping {
 			return null;
 		}
 		
-		Set<BiolinkClass> classes = new HashSet<BiolinkClass>();
+		Set<BiolinkEntity> classes = new HashSet<>();
 		
 		for (String name : biolinkClasses) {
-			BiolinkClass c = classModelLookup.getClassByName(name);
+			BiolinkEntity c = classModelLookup.getClassByName(name);
 			if (c != null) {
 				classes.add(c);
 				classes.addAll(classInheritanceLookup.getDescendants(c));
@@ -85,7 +85,7 @@ public class UMLSBiolinkMapping extends BiolinkModelMapping {
 		
 		biolinkClasses = classes.stream().map(c -> c.getName()).collect(Collectors.toList());
 		
-		Set<String> curies = new HashSet<String>();
+		Set<String> curies = new HashSet<>();
 		
 		for (String biolinkClass : biolinkClasses) {
 			String curie = biolinkToUmls(biolinkClass);
@@ -104,7 +104,7 @@ public class UMLSBiolinkMapping extends BiolinkModelMapping {
 	 * 
 	 */
 	private String biolinkToUmls(String biolinkClassName) {
-		BiolinkClass biolinkClass = classModelLookup.getClassByName(biolinkClassName);
+		BiolinkEntity biolinkClass = classModelLookup.getClassByName(biolinkClassName);
 		
 		if (biolinkClass != null) {
 			for (String curie : biolinkClass.getMappings()) {

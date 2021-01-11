@@ -28,6 +28,7 @@
 package bio.knowledge.ontology;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -49,20 +50,12 @@ import bio.knowledge.ontology.utils.Utils;
  */
 public class Ontology {
 	
-	private static Logger _logger = LoggerFactory.getLogger(Ontology.class);
-	
-	private BeaconBiolinkModel biolinkModel;
-	
-	private ModelLookup<BiolinkClass> classLookup;
-	private ModelLookup<BiolinkSlot> slotLookup;
-	
-	private InheritanceLookup<BiolinkClass> classInheritanceLookup;
-	private InheritanceLookup<BiolinkSlot> slotInheritanceLookup;
-	
-	private final String DEFAULT_CATEGORY = "named thing";
-	private final String DEFAULT_PREDICATE = "related to";
-	
-	private final Map<String, String> uriMapping = new HashMap<String, String>();
+	private static final Logger _logger = LoggerFactory.getLogger(Ontology.class);
+
+	private ModelLookup classLookup;
+	private ModelLookup slotLookup;
+
+	private final Map<String, String> uriMapping = new HashMap<>();
 	
 	@PostConstruct
 	private void init() {
@@ -72,31 +65,34 @@ public class Ontology {
 		uriMapping.put("HTTPS://KBA.NCATS.IO/BEACON/NDEX",    NameSpace.UMLSSG.getPrefix());
 
 		Optional<BeaconBiolinkModel> optional = BeaconBiolinkModel.load();
+		BeaconBiolinkModel biolinkModel;
 		if(optional.isPresent()) {
 			biolinkModel = optional.get();
 		} else
 			throw new RuntimeException("Beacon Ontology ERROR: Biolink Model loading unsuccessful?");
-		
-		classInheritanceLookup = new InheritanceLookup<BiolinkClass>(biolinkModel.getClasses());
-		slotInheritanceLookup = new InheritanceLookup<BiolinkSlot>(biolinkModel.getSlots());
-		
-		classLookup = new ModelLookup<BiolinkClass>(biolinkModel.getClasses(), classInheritanceLookup);
-		slotLookup = new ModelLookup<BiolinkSlot>(biolinkModel.getSlots(), slotInheritanceLookup);
+
+		List<? extends BiolinkEntity> classes = biolinkModel.getClasses();
+		InheritanceLookup classInheritanceLookup = new InheritanceLookup(classes);
+		classLookup = new ModelLookup(classes, classInheritanceLookup);
+
+		List<? extends BiolinkEntity> slots = biolinkModel.getSlots() ;
+		InheritanceLookup slotInheritanceLookup = new InheritanceLookup(slots);
+		slotLookup  = new ModelLookup(slots,   slotInheritanceLookup);
 	}
 	
 	/**
-	 * 
+	 *
 	 * @return
 	 */
-	protected ModelLookup<BiolinkClass> getClassLookup() {
+	protected ModelLookup getClassLookup() {
 		return classLookup;
 	}
 	
 	/**
-	 * 
+	 *
 	 * @return
 	 */
-	protected ModelLookup<BiolinkSlot> getSlotLookup() {
+	protected ModelLookup getSlotLookup() {
 		return slotLookup;
 	}
 	
@@ -105,7 +101,7 @@ public class Ontology {
 	 * @param biolinkTerm
 	 * @return
 	 */
-	public Optional<BiolinkClass> getClassByName(BiolinkTerm biolinkTerm) {
+	public Optional<BiolinkEntity> getClassByName(BiolinkTerm biolinkTerm) {
 		return getClassByName(biolinkTerm.getLabel());
 	}
 	
@@ -114,8 +110,8 @@ public class Ontology {
 	 * @param biolinkClassName
 	 * @return
 	 */
-	public Optional<BiolinkClass> getClassByName(String biolinkClassName) {
-		BiolinkClass biolinkClass = classLookup.getClassByName(biolinkClassName);
+	public Optional<BiolinkEntity> getClassByName(String biolinkClassName) {
+		BiolinkEntity biolinkClass = classLookup.getClassByName(biolinkClassName);
 		return Optional.ofNullable(biolinkClass);
 	}
 	
@@ -123,7 +119,8 @@ public class Ontology {
 	 * 
 	 * @return
 	 */
-	public BiolinkClass getDefaultCategory() {
+	public BiolinkEntity getDefaultCategory() {
+		String DEFAULT_CATEGORY = "named thing";
 		return classLookup.getClassByName(DEFAULT_CATEGORY);
 	}
 
@@ -131,7 +128,8 @@ public class Ontology {
 	 * 
 	 * @return
 	 */
-	public BiolinkSlot getDefaultPredicate() {
+	public BiolinkEntity getDefaultPredicate() {
+		String DEFAULT_PREDICATE = "related to";
 		return slotLookup.getClassByName(DEFAULT_PREDICATE);
 	}
 
@@ -140,8 +138,8 @@ public class Ontology {
 	 * @param biolinkSlotName
 	 * @return
 	 */
-	public Optional<BiolinkSlot> getSlotByName(String biolinkSlotName) {
-		BiolinkSlot slot = slotLookup.getClassByName(biolinkSlotName);
+	public Optional<BiolinkEntity> getSlotByName(String biolinkSlotName) {
+		BiolinkEntity slot = slotLookup.getClassByName(biolinkSlotName);
 		return Optional.ofNullable(slot);
 	}
 	
@@ -152,13 +150,13 @@ public class Ontology {
 	 * @param modelLookup
 	 * @return
 	 */
-	public Optional<BiolinkEntityInterface> getMapping( 
+	public Optional<BiolinkEntity> getMapping(
 			String namespace, 
 			String termId,  
-			ModelLookup<? extends BiolinkEntityInterface> modelLookup
+			ModelLookup modelLookup
 		) {
 		
-		BiolinkEntityInterface biolinkTerm;
+		BiolinkEntity biolinkTerm;
 		String prefix;
 		String curie;
 		

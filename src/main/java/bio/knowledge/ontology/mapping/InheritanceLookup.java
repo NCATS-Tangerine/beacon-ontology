@@ -7,26 +7,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import bio.knowledge.ontology.BiolinkEntityInterface;
+import bio.knowledge.ontology.BiolinkEntity;
 
-public class InheritanceLookup<T extends BiolinkEntityInterface> {
+public class InheritanceLookup {
 	
-	private Map<T, T> childToParentMap = new HashMap<T, T>();
-	private Map<T, Set<T>> parentToChildrenMap = new HashMap<T, Set<T>>();
+	private Map<
+			BiolinkEntity,
+			BiolinkEntity
+			> childToParentMap = new HashMap<>();
+	private Map<
+			BiolinkEntity,
+				Set<BiolinkEntity>
+			> parentToChildrenMap = new HashMap<>();
 	
-	public InheritanceLookup(List<T> entities) {
+	public InheritanceLookup(List<? extends BiolinkEntity> entities) {
 		
-		Map<String, T> nameMap = new HashMap<String, T>();
+		Map<String, BiolinkEntity> nameMap = new HashMap<String, BiolinkEntity>();
 		
-		for (T c : entities) {
+		for (BiolinkEntity c : entities) {
 			nameMap.put(c.getName(), c);
 		}
 		
-		for (T child : entities) {
+		for (BiolinkEntity child : entities) {
 			String parentName = child.getIs_a();
 			
 			if (parentName != null) {
-				T parent = nameMap.get(parentName);
+				BiolinkEntity parent = nameMap.get(parentName);
 				
 				childToParentMap.put(child, parent);
 				addChild(parent, child);
@@ -37,26 +43,26 @@ public class InheritanceLookup<T extends BiolinkEntityInterface> {
 	/**
 	 * Gets the BiolinkClass that the given child class inherits from
 	 */
-	public T getParent(T child) {
+	public BiolinkEntity getParent(BiolinkEntity child) {
 		return childToParentMap.get(child);
 	}
 	
 	/**
 	 * Gets the BiolinkClass's that inherit from the given parent
 	 */
-	public Set<T> getChildren(T parent) {
-		Set<T> children = parentToChildrenMap.get(parent);
-		return Collections.unmodifiableSet(children != null ? children : new HashSet<T>());
+	public Set<BiolinkEntity> getChildren(BiolinkEntity parent) {
+		Set<BiolinkEntity> children = parentToChildrenMap.get(parent);
+		return Collections.unmodifiableSet(children != null ? children : new HashSet<BiolinkEntity>());
 	}
 	
 	/**
 	 * Builds up a set of all BiolinkClass's that the given
 	 * BiolinkClass inherits from
 	 */
-	public Set<T> getAncestors(T child) {
-		Set<T> set = new HashSet<T>();
+	public Set<BiolinkEntity> getAncestors(BiolinkEntity child) {
+		Set<BiolinkEntity> set = new HashSet<BiolinkEntity>();
 		
-		T parent = getParent(child);
+		BiolinkEntity parent = getParent(child);
 		
 		while (parent != null) {
 			set.add(parent);
@@ -70,17 +76,17 @@ public class InheritanceLookup<T extends BiolinkEntityInterface> {
 	 * Recursively builds up a set of all BiolinkClass's that inherit from
 	 * the given BiolinkClass
 	 */
-	public Set<T> getDescendants(T parent) {
-		Set<T> children = getChildren(parent);
+	public Set<BiolinkEntity> getDescendants(BiolinkEntity parent) {
+		Set<BiolinkEntity> children = getChildren(parent);
 		
 		if (children == null || children.isEmpty()) {
-			return new HashSet<T>();
+			return new HashSet<BiolinkEntity>();
 			
 		} else {
-			Set<T> descendants = new HashSet<T>();
+			Set<BiolinkEntity> descendants = new HashSet<BiolinkEntity>();
 			descendants.addAll(children);
 
-			for (T child : children) {
+			for (BiolinkEntity child : children) {
 				descendants.addAll(getDescendants(child));
 			}
 			
@@ -88,19 +94,19 @@ public class InheritanceLookup<T extends BiolinkEntityInterface> {
 		}
 	}
 	
-	public boolean containsParent(T parent) {
+	public boolean containsParent(BiolinkEntity parent) {
 		return parentToChildrenMap.containsKey(parent);
 	}
 	
-	public boolean containsChild(T child) {
+	public boolean containsChild(BiolinkEntity child) {
 		return childToParentMap.containsKey(child);
 	}
 	
-	private boolean addChild(T parent, T child) {
-		Set<T> children = parentToChildrenMap.get(parent);
+	private boolean addChild(BiolinkEntity parent, BiolinkEntity child) {
+		Set<BiolinkEntity> children = parentToChildrenMap.get(parent);
 		
 		if (children == null) {
-			children = new HashSet<T>();
+			children = new HashSet<BiolinkEntity>();
 		}
 		
 		boolean isChildAdded = children.add(child);

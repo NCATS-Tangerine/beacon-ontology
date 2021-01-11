@@ -1,12 +1,13 @@
 package bio.knowledge.ontology;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 //import static org.junit.Assert.fail;
 
+import java.util.List;
 import java.util.Set;
 
 //import org.junit.Ignore;
+import org.junit.Assert;
 import org.junit.Test;
 
 import bio.knowledge.ontology.mapping.InheritanceLookup;
@@ -18,11 +19,13 @@ public class Tests {
 
 	BeaconBiolinkModel biolinkModel = BeaconBiolinkModel.get();
 
-	InheritanceLookup<BiolinkClass> classInheritanceLookup = new InheritanceLookup<BiolinkClass>(biolinkModel.getClasses());
-	InheritanceLookup<BiolinkSlot> slotInheritanceLookup = new InheritanceLookup<BiolinkSlot>(biolinkModel.getSlots());
+	List<? extends BiolinkEntity> classes = biolinkModel.getClasses();
+	InheritanceLookup classInheritanceLookup = new InheritanceLookup(classes);
+	ModelLookup biolinkClassLookup = new ModelLookup(classes, classInheritanceLookup);
 
-	ModelLookup<BiolinkClass> biolinkClassLookup = new ModelLookup<BiolinkClass>(biolinkModel.getClasses(), classInheritanceLookup);
-	ModelLookup<BiolinkSlot> biolinkSlotLookup = new ModelLookup<BiolinkSlot>(biolinkModel.getSlots(), slotInheritanceLookup);
+	List<? extends BiolinkEntity> slots = biolinkModel.getSlots() ;
+	InheritanceLookup slotInheritanceLookup  = new InheritanceLookup(slots);
+	ModelLookup biolinkSlotLookup  = new ModelLookup(slots,   slotInheritanceLookup);
 
 	String UMLS_GROUP_PREFIX = "UMLSSG:";
 	String UMLS_CODE_PREFIX  = "UMLSSC:";
@@ -31,7 +34,7 @@ public class Tests {
 	@Test
 	public void testUmlsCategories() {
 		for (String category : umls.getUmlsCategories()) {
-			BiolinkClass c = biolinkClassLookup.lookup(UMLS_GROUP_PREFIX + category);
+			BiolinkEntity c = biolinkClassLookup.lookup(UMLS_GROUP_PREFIX + category);
 			if (c == null) {
 				System.err.println("Warning: UMLS Semantic Category '"+category+"' not mapped to Biolink?");
 				// fail(category + " was not mapped");
@@ -42,7 +45,7 @@ public class Tests {
 	@Test
 	public void testUmlsCodes() {
 		for (String code : umls.getUmlsCodes()) {
-			BiolinkClass c = biolinkClassLookup.lookup(UMLS_CODE_PREFIX + code);
+			BiolinkEntity c = biolinkClassLookup.lookup(UMLS_CODE_PREFIX + code);
 			if (c == null) {
 				System.err.println("Warning: UMLS Semantic Code '"+code+"' not mapped to Biolink?");
 				// fail(code + " was not mapped");
@@ -53,7 +56,7 @@ public class Tests {
 	@Test
 	public void testUmlsTypes() {
 		for (String type : umls.getUmlsTypes()) {
-			BiolinkClass c = biolinkClassLookup.lookup(UMLS_TYPE_PREFIX + type);
+			BiolinkEntity c = biolinkClassLookup.lookup(UMLS_TYPE_PREFIX + type);
 			if (c == null) {
 				System.err.println("Warning: UMLS Semantic Type '"+type+"' not mapped to Biolink?");
 				// fail(type + " was not mapped");
@@ -63,32 +66,32 @@ public class Tests {
 
 	@Test
 	public void classInheritanceLookup() {
-		BiolinkClass c = biolinkClassLookup.lookup("SIO:010004");
+		BiolinkEntity c = biolinkClassLookup.lookup("SIO:010004");
 
 		assertEquals(c.getName(), "chemical substance");
 
-		BiolinkClass parent = classInheritanceLookup.getParent(c);
+		BiolinkEntity parent = classInheritanceLookup.getParent(c);
 
 		assertEquals(parent.getName(), "molecular entity");
 
-		Set<BiolinkClass> children = classInheritanceLookup.getChildren(parent);
+		Set<BiolinkEntity> children = classInheritanceLookup.getChildren(parent);
 
-		assertTrue(children.contains(c));
+		Assert.assertTrue(children.contains(c));
 	}
 
 	@Test
 	public void slotInheritanceLookup() {
-		BiolinkSlot slot = biolinkSlotLookup.lookup("SEMMEDDB:INHIBITS");
+		BiolinkEntity slot = biolinkSlotLookup.lookup("SEMMEDDB:IS_A");
 
-		assertEquals(slot.getName(), "negatively regulates, entity to entity");
+		assertEquals(slot.getName(), "subclass of");
 
-		BiolinkSlot parent = slotInheritanceLookup.getParent(slot);
+		BiolinkEntity parent = slotInheritanceLookup.getParent(slot);
 
-		assertEquals(parent.getName(), "regulates, entity to entity");
+		assertEquals(parent.getName(), "related to");
 
-		Set<BiolinkSlot> children = slotInheritanceLookup.getChildren(parent);
+		Set<BiolinkEntity> children = slotInheritanceLookup.getChildren(parent);
 
-		assertTrue(children.contains(slot));
+		Assert.assertTrue(children.contains(slot));
 	}
 
 	@Test
@@ -100,12 +103,12 @@ public class Tests {
 		 SO:0001026 is a "class_uri" so needs to be
 		 uncovered by the reverseLookup in this manner now
 		 */
-		assertTrue(curies.contains("biolink:Genome"));
-		assertTrue(curies.contains("SO:0001026"));
-		assertTrue(curies.contains("SIO:000984"));
-		assertTrue(curies.contains("WIKIDATA:Q7020"));
+		Assert.assertTrue(curies.contains("biolink:Genome"));
+		Assert.assertTrue(curies.contains("SO:0001026"));
+		Assert.assertTrue(curies.contains("SIO:000984"));
+		Assert.assertTrue(curies.contains("WIKIDATA:Q7020"));
 
-		assertTrue(curies.size() == 4);
+		assertEquals(4, curies.size());
 	}
 
 	@Test
@@ -113,13 +116,13 @@ public class Tests {
 		String biolinkSlotName = "causes";
 		Set<String> curies = biolinkSlotLookup.reverseLookup(biolinkSlotName);
 
-		assertTrue(curies.contains("biolink:causes"));
-		assertTrue(curies.contains("RO:0002410"));
-		assertTrue(curies.contains("SEMMEDDB:CAUSES"));
-		assertTrue(curies.contains("WIKIDATA:P1542"));
-		assertTrue(curies.contains("MONDO:disease_triggers"));
+		Assert.assertTrue(curies.contains("biolink:causes"));
+		Assert.assertTrue(curies.contains("RO:0002410"));
+		Assert.assertTrue(curies.contains("SEMMEDDB:CAUSES"));
+		Assert.assertTrue(curies.contains("WIKIDATA:P1542"));
+		Assert.assertTrue(curies.contains("MONDO:disease_triggers"));
 
-		assertTrue(curies.size() == 5);
+		assertEquals(5, curies.size());
 	}
 
 	@Test
